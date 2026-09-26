@@ -30,8 +30,6 @@ If the commands don't exist, install a JDK. It's important to install the **JDK*
 
 # 2. How to run from the terminal
 
-## Linux and macOS
-
 Clone the project:
 
 ```bash
@@ -39,46 +37,11 @@ git clone https://github.com/pablofranca19/PokeSal.git
 cd PokeSal
 ```
 
-Compile the `.java` files:
+Inside the /PokeSal/ root directory, run:
 
 ```bash
-mkdir -p out
-javac -d out PokeSal/src/*.java
+java -jar target/pokesal-1.0-SNAPSHOT.jar
 ```
-
-Run the game:
-
-```bash
-java -cp out Main
-```
-
-## Windows PowerShell
-
-```powershell
-git clone https://github.com/pablofranca19/PokeSal.git
-cd PokeSal
-mkdir out
-javac -d out PokeSal/src/*.java
-java -cp out Main
-```
-
-The main class is `Main.java`, located at:
-
-```text
-PokeSal/src/Main.java
-```
-
-Compiled files will be placed in the `out` folder.
-
-To run again after changing the code:
-
-```bash
-javac -d out PokeSal/src/*.java
-java -cp out Main
-```
-
-The `out` directory is already ignored by `.gitignore`.
-
 ---
 
 ## 3. Project structure
@@ -87,24 +50,87 @@ The `out` directory is already ignored by `.gitignore`.
 PokeSal/
 ├── README.md
 ├── docs/
-└── PokeSal/
-    ├── .idea/
+└── PokeSal-refactor/
     ├── PokeSal.iml
-    └── src/
-        ├── Main.java
-        ├── Batalha.java
-        ├── Inicial.java
-        ├── Ataque.java
-        ├── CalcDano.java
-        ├── Terreno.java
-        ├── Mochila.java
-        ├── Item.java
-        ├── Pocao.java
-        ├── CuraStatus.java
-        ├── Buff.java
-        ├── Tipo.java
-        ├── EfeitoStatus.java
-        └── PokéSal classes
+    ├── pom.xml
+    ├── src
+    │   ├── main
+    │   │   └── java
+    │   │       ├── application
+    │   │       │   └── Main.java
+    │   │       ├── models
+    │   │       │   ├── enums
+    │   │       │   │   ├── EfeitoStatus.java
+    │   │       │   │   ├── Terreno.java
+    │   │       │   │   └── Tipo.java
+    │   │       │   ├── Inicial.java
+    │   │       │   └── pokesal
+    │   │       │       ├── BulbaSal.java
+    │   │       │       ├── CharSal.java
+    │   │       │       ├── ChikoSal.java
+    │   │       │       ├── CyndaSal.java
+    │   │       │       ├── SquirtSal.java
+    │   │       │       └── TotoSal.java
+    │   │       └── utils
+    │   │           ├── Ataque.java
+    │   │           ├── Batalha.java
+    │   │           ├── Buff.java
+    │   │           ├── CalcDano.java
+    │   │           ├── CuraStatus.java
+    │   │           ├── GerarInicial.java
+    │   │           ├── GerarTerreno.java
+    │   │           ├── Item.java
+    │   │           ├── Mochila.java
+    │   │           └── Pocao.java
+    │   └── test
+    │       └── java
+    └── target
+        ├── classes
+        │   ├── Main.class
+        │   ├── models
+        │   │   ├── enums
+        │   │   │   ├── EfeitoStatus.class
+        │   │   │   ├── Terreno.class
+        │   │   │   └── Tipo.class
+        │   │   ├── Inicial.class
+        │   │   └── pokesal
+        │   │       ├── BulbaSal.class
+        │   │       ├── CharSal.class
+        │   │       ├── ChikoSal.class
+        │   │       ├── CyndaSal.class
+        │   │       ├── SquirtSal.class
+        │   │       └── TotoSal.class
+        │   └── utils
+        │       ├── Ataque.class
+        │       ├── Batalha.class
+        │       ├── Buff.class
+        │       ├── CalcDano$1.class
+        │       ├── CalcDano.class
+        │       ├── CuraStatus.class
+        │       ├── GerarInicial.class
+        │       ├── GerarTerreno.class
+        │       ├── Item.class
+        │       ├── Mochila.class
+        │       └── Pocao.class
+        ├── generated-sources
+        │   └── annotations
+        ├── generated-test-sources
+        │   └── test-annotations
+        ├── maven-archiver
+        │   └── pom.properties
+        ├── maven-status
+        │   └── maven-compiler-plugin
+        │       ├── compile
+        │       │   └── default-compile
+        │       │       ├── createdFiles.lst
+        │       │       └── inputFiles.lst
+        │       └── testCompile
+        │           └── default-testCompile
+        │               ├── createdFiles.lst
+        │               └── inputFiles.lst
+        ├── original-pokesal-1.0-SNAPSHOT.jar
+        ├── pokesal-1.0-SNAPSHOT.jar
+        └── test-classes
 ```
 
 Main responsibilities:
