@@ -17,7 +17,7 @@ public class CuraStatus extends Item {
         if (inicial.getStatus() == statusCura) {
             inicial.curarStatus();
         } else{
-            IO.println("Não haverá efeito.");
+            System.out.println("Não haverá efeito.");
         }
     }
 }

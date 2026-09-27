@@ -35,7 +35,7 @@ public enum Terreno {
                 int curaReal = inicial.getHpAtual() - hpAntes;
 
                 if (curaReal > 0){
-                    IO.println(inicial.getNome() + " foi curado pelo terreno! (+" + curaReal + "HP | HP: "
+                    System.out.println(inicial.getNome() + " foi curado pelo terreno! (+" + curaReal + "HP | HP: "
                             + inicial.getHpAtual() + "/" + inicial.getHpMax() + ")");
                 }
             }

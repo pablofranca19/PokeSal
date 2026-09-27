@@ -120,7 +120,7 @@ public class Inicial {
         int hpAntes = this.hpAtual;
         this.hpAtual = Math.min(this.hpAtual + quant, hpMax);
         int curado = this.hpAtual - hpAntes;
-        IO.println(nome + " recuperou " + curado + "HP! (HP atual: " + this.hpAtual + ")");
+        System.out.println(nome + " recuperou " + curado + "HP! (HP atual: " + this.hpAtual + ")");
     }
 
     private static final int ESTAGIO_MIN = -6;
@@ -140,7 +140,7 @@ public class Inicial {
 
     public void curarStatus(){
         this.status = EfeitoStatus.NENHUM;
-        IO.println(nome + " ficou saudável!");
+        System.out.println(nome + " ficou saudável!");
     }
 
     public void receberDano(int dano){

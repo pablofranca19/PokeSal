@@ -15,7 +15,7 @@ public class Pocao extends Item {
         if (inicial.getHpAtual() != inicial.getHpMax()) {
             inicial.curar(QUANT_CURA_POCAO);
         } else{
-            IO.println("Não haverá efeito.");
+            System.out.println("Não haverá efeito.");
         }
     }
 }

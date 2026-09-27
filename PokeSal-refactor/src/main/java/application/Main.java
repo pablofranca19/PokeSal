@@ -19,8 +19,8 @@ public class Main {
         boolean sair = false;
         int numeroBatalha = 1;
         do {
-            IO.println("Batalha " + numeroBatalha +"-");
-            IO.println("""
+            System.out.println("Batalha " + numeroBatalha +"-");
+            System.out.println("""
                 --- ESCOLHA O SEU POKÉSAL INICIAL ---
                 1. BulbaSal (Planta)
                 2. CharSal (Fogo)
@@ -42,13 +42,13 @@ public class Main {
                 case 6 -> inicial = new TotoSal();
                 case 7 -> sair = true;
                 default -> {
-                    IO.println("Opção inválida.");
+                    System.out.println("Opção inválida.");
                     continue;
                 }
             }
 
             if (!sair){
-                IO.println("COMEÇAR A BATALHA? (S/N)");
+                System.out.println("COMEÇAR A BATALHA? (S/N)");
                 char conf = sc.next().toLowerCase().charAt(0);
 
                 if (conf == 's') {
@@ -57,7 +57,7 @@ public class Main {
                     mochila.adicionarItem(new CuraStatus("Antídoto", EfeitoStatus.ENVENENADO));
                     mochila.adicionarItem(new CuraStatus("Antiqueimadura", EfeitoStatus.QUEIMADO));
                     mochila.adicionarItem(new CuraStatus("Antiparalisia", EfeitoStatus.PARALISADO));
-                    IO.println("A BATALHA COMEÇA!");
+                    System.out.println("A BATALHA COMEÇA!");
 
                     Inicial oponente = GerarInicial.gerar();
                     Terreno terreno = GerarTerreno.gerar();
@@ -66,7 +66,7 @@ public class Main {
                     bat.iniciarBatalha();
                     numeroBatalha++;
                 } else if (conf != 'n'){
-                    IO.println("Opção inválida.");
+                    System.out.println("Opção inválida.");
                 }
             }
 
