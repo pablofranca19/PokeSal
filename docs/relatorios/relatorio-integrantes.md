@@ -9,6 +9,9 @@ Este relatório diz respeito às atividades feitas por cada integrante ao decorr
 
 ### Vinícius Scola Santana
 
+### O que eu fiz nessa segunda fase do projeto?
+
+- Fiquei responsável pelo preenchimento e pela entrega do checklist de teste estático do código-fonte. Escaneei o código em busca de erros de compilação ou de sintaxe (como laços de repetição infinitos, código inacessível, etc.) e anotei os mesmos, detalhando onde e como o erro ocorreu.
 
 ### Pablo Melo Franca Filho
 
