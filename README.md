@@ -34,7 +34,7 @@ Clone the project:
 
 ```bash
 git clone https://github.com/pablofranca19/PokeSal.git
-cd PokeSal
+cd /(where you cloned the project)/PokeSal/PokeSal-refactor
 ```
 
 Inside the /PokeSal/ root directory, run:
