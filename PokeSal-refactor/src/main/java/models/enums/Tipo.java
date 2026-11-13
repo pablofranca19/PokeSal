@@ -5,5 +5,6 @@ public enum Tipo {
     FOGO,
     AGUA,
     PLANTA,
-    VENENO
+    VENENO,
+    ELETRICO
 }

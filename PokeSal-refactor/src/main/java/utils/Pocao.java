@@ -1,6 +1,6 @@
 package utils;
 
-import models.Inicial;
+import models.Pokemon;
 
 public class Pocao extends Item {
 
@@ -11,9 +11,9 @@ public class Pocao extends Item {
     private static final int QUANT_CURA_POCAO = 20;
 
     @Override
-    public void usar(Inicial inicial) {
-        if (inicial.getHpAtual() != inicial.getHpMax()) {
-            inicial.curar(QUANT_CURA_POCAO);
+    public void usar(Pokemon pokemon) {
+        if (pokemon.getHpAtual() != pokemon.getHpMax()) {
+            pokemon.curar(QUANT_CURA_POCAO);
         } else{
             System.out.println("Não haverá efeito.");
         }

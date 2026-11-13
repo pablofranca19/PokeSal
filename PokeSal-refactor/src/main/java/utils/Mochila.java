@@ -1,7 +1,7 @@
 package utils;
 
 
-import models.Inicial;
+import models.Pokemon;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,18 +33,22 @@ public class Mochila {
 
     /**
      * @param item
-     * @param inicial
+     * @param pokemon
      * @throws IllegalStateException
      */
-    public void usarItem(Item item, Inicial inicial){
+    public void usarItem(Item item, Pokemon pokemon){
         if (this.usados >= LIMITE_USO_ITENS){
             throw new IllegalStateException("Você só pode usar 2 itens por batalha!");
         }
 
         if (this.itens.contains(item)){
-            item.usar(inicial);
+            item.usar(pokemon);
             this.usados++;
         }
+    }
+
+    public void removerItem(Item item) {
+        this.itens.remove(item);
     }
 
     public void resetarUso(){

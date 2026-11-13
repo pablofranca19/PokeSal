@@ -2,14 +2,14 @@ package models;
 
 import models.enums.EfeitoStatus;
 import models.enums.Tipo;
+import services.GeradorDoubleAleatorio;
 import utils.Ataque;
 
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Random;
 import java.util.Collections;
 
-public class Inicial {
+public class Pokemon {
     protected String nome;
     protected Tipo tipo;
     protected int hpMax;
@@ -22,9 +22,8 @@ public class Inicial {
     protected int estagioSpd;
     protected EfeitoStatus status = EfeitoStatus.NENHUM;
     protected List<Ataque> golpes;
-    private static final Random RANDOM = new Random();
 
-    public Inicial(String nome, Tipo tipo, int hpMax, int atk, int def, int spd){
+    public Pokemon(String nome, Tipo tipo, int hpMax, int atk, int def, int spd){
         this.nome = nome;
         this.tipo = tipo;
         this.hpMax = hpMax;
@@ -164,10 +163,18 @@ public class Inicial {
 
     private static final double CHANCE_PARALISIA = 0.25;
 
-    public boolean podeAgir(){
+    public boolean podeAgir(GeradorDoubleAleatorio geradorDouble){
         if (status == EfeitoStatus.PARALISADO){
-            return RANDOM.nextDouble() >= CHANCE_PARALISIA;
+            return (geradorDouble.gerarDouble() >= CHANCE_PARALISIA);
         }
         return true;
+    }
+
+    public void restaurar(){
+        this.hpAtual = this.hpMax;
+        this.status = EfeitoStatus.NENHUM;
+        this.estagioAtk = 0;
+        this.estagioDef = 0;
+        this.estagioSpd = 0;
     }
 }

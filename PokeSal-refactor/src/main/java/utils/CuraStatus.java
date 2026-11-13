@@ -1,6 +1,6 @@
 package utils;
 
-import models.Inicial;
+import models.Pokemon;
 import models.enums.EfeitoStatus;
 
 
@@ -13,9 +13,9 @@ public class CuraStatus extends Item {
     }
 
     @Override
-    public void usar(Inicial inicial) {
-        if (inicial.getStatus() == statusCura) {
-            inicial.curarStatus();
+    public void usar(Pokemon pokemon) {
+        if (pokemon.getStatus() == statusCura) {
+            pokemon.curarStatus();
         } else{
             System.out.println("Não haverá efeito.");
         }

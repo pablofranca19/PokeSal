@@ -1,6 +1,6 @@
 package utils;
 
-import models.Inicial;
+import models.Pokemon;
 
 public abstract class Item{
     protected String nome;
@@ -9,5 +9,5 @@ public abstract class Item{
         this.nome = nome;
     }
 
-    public abstract void usar(Inicial inicial);
+    public abstract void usar(Pokemon pokemon);
 }

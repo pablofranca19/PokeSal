@@ -1,23 +1,27 @@
 package utils;
 
 import models.*;
-import models.pokesal.*;
+import models.pokesal.pokesalFactories.*;
+import services.GeradorInteiroAleatorio;
 
-import java.util.Random;
+import java.util.List;
+
 public class GerarInicial {
-    private static final Random RANDOM = new Random();
+    private final GeradorInteiroAleatorio gerador;
+    private final List<PokemonAbstractFactory> factories;
 
-    public static Inicial gerar(){
-        int in = RANDOM.nextInt(6) + 1;
+    public GerarInicial(GeradorInteiroAleatorio gerador, List<PokemonAbstractFactory> factories) {
+        this.gerador = gerador;
+        this.factories = List.copyOf(factories);
+    }
 
-        return switch (in){
-            case 1 -> new BulbaSal();
-            case 2 -> new CharSal();
-            case 3 -> new SquirtSal();
-            case 4 -> new ChikoSal();
-            case 5 -> new CyndaSal();
-            case 6 -> new TotoSal();
-            default -> throw new IllegalStateException("Valor inesperado: " + in);
-        };
+    public GerarInicial(GeradorInteiroAleatorio gerador){
+        this (gerador, List.of(new BulbaSalFactory(), new CharSalFactory (), new SquirtSalFactory(),
+                new ChikoSalFactory(), new CyndaSalFactory(), new TotoSalFactory(), new PikaSalFactory()));
+    }
+
+    public Pokemon gerar(){
+        int in = gerador.gerarInt(factories.size());
+        return factories.get(in).criarPokemon();
     }
 }
