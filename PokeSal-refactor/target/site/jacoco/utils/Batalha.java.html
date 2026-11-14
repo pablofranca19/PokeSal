@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Batalha.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">Batalha.java</span></div><h1>Batalha.java</h1><pre class="source lang-java linenums">package utils;
+
+import models.Pokemon;
+import models.Treinador;
+import models.enums.Clima;
+import models.enums.EfeitoStatus;
+import models.terrains.Terreno;
+import services.GeradorDoubleAleatorio;
+import services.ServicoTerreno;
+
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class Batalha {
+    private static final int ESTAGIO_MAX = 6;
+    private static final int ESTAGIO_MIN = -6;
+    private static final int QTD_ITENS_MOCHILA = 4;
+<span class="fc" id="L21">    private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern(&quot;HH:mm&quot;);</span>
+
+    private final Pokemon pokemonJogador;
+    private final Pokemon pokemonOponente;
+    private final Treinador jogador;
+    private final Treinador oponente;
+    private final CalcDano calcDano;
+    private final ServicoTerreno servicoTerreno;
+    private final RegistroBatalha registro;
+    private final RepositorioResultados repositorio;
+    private final GeradorDoubleAleatorio gerador;
+    private final Scanner sc;
+    private final boolean podeFugir;
+    private final String tagJogador;
+    private final String tagOponente;
+
+    private Terreno terreno;
+    private Terreno terrenoAnterior;
+
+    public Batalha(Treinador jogador, Treinador oponente, ServicoTerreno servicoTerreno, CalcDano calcDano,
+                   RegistroBatalha registro, RepositorioResultados repositorio, GeradorDoubleAleatorio gerador,
+<span class="fc" id="L42">                   Scanner sc, boolean podeFugir) {</span>
+<span class="fc" id="L43">        this.jogador = jogador;</span>
+<span class="fc" id="L44">        this.oponente = oponente;</span>
+<span class="fc" id="L45">        this.servicoTerreno = servicoTerreno;</span>
+<span class="fc" id="L46">        this.calcDano = calcDano;</span>
+<span class="fc" id="L47">        this.terreno = servicoTerreno.gerarTerreno();</span>
+<span class="fc" id="L48">        this.terrenoAnterior = this.terreno;</span>
+<span class="fc" id="L49">        this.registro = registro;</span>
+<span class="fc" id="L50">        this.repositorio = repositorio;</span>
+<span class="fc" id="L51">        this.gerador = gerador;</span>
+<span class="fc" id="L52">        this.pokemonJogador = jogador.getPokemons().getFirst();</span>
+<span class="fc" id="L53">        this.pokemonOponente = oponente.getPokemons().getFirst();</span>
+<span class="fc" id="L54">        this.sc = sc;</span>
+<span class="fc" id="L55">        this.podeFugir = podeFugir;</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">        this.tagJogador = jogador.isUsuario() ? &quot;VOCÊ&quot; : jogador.getNome();</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        this.tagOponente = podeFugir ? &quot;CPU&quot; : oponente.getNome();</span>
+<span class="fc" id="L58">    }</span>
+
+    public Batalha(Treinador jogador, Treinador oponente, ServicoTerreno servicoTerreno, CalcDano calcDano,
+                   RegistroBatalha registro, RepositorioResultados repositorio, GeradorDoubleAleatorio gerador, Scanner sc) {
+<span class="nc" id="L62">        this(jogador, oponente, servicoTerreno, calcDano, registro, repositorio, gerador, sc, true);</span>
+<span class="nc" id="L63">    }</span>
+
+    public ResultadoBatalha iniciarBatalha(){
+<span class="fc" id="L66">        Treinador vencedor = null;</span>
+<span class="fc" id="L67">        Treinador perdedor = null;</span>
+<span class="fc" id="L68">        int contadorTurnos = 0;</span>
+
+<span class="fc" id="L70">        List&lt;Pokemon&gt; pokemonsUsados = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L71">        pokemonsUsados.add(pokemonJogador);</span>
+<span class="fc" id="L72">        pokemonsUsados.add(pokemonOponente);</span>
+
+<span class="fc" id="L74">        System.out.println(&quot;\n========================================&quot;);</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">        if (podeFugir) {</span>
+<span class="fc" id="L76">            System.out.println(&quot; Um &quot; + pokemonOponente.getNome() + &quot; selvagem apareceu!&quot;);</span>
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        } else if (jogador.isUsuario()) {</span>
+<span class="fc" id="L78">            System.out.println(&quot; Treinador(a) &quot; + oponente.getNome() + &quot; quer batalhar!&quot;);</span>
+        } else {
+<span class="fc" id="L80">            System.out.println(&quot; &quot; + jogador.getNome() + &quot; VS &quot; + oponente.getNome() + &quot;!&quot;);</span>
+        }
+<span class="fc" id="L82">        System.out.println(&quot;========================================\n&quot;);</span>
+
+<span class="fc bfc" id="L84" title="All 4 branches covered.">        while (pokemonJogador.getHpAtual() &gt; 0 &amp;&amp; pokemonOponente.getHpAtual() &gt; 0) {</span>
+<span class="fc" id="L85">            Clima climaAtual = servicoTerreno.getClima();</span>
+<span class="fc" id="L86">            LocalTime horarioAtual = servicoTerreno.getHorarioAtual();</span>
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">            String horaFormatada = (horarioAtual != null) ? horarioAtual.format(FORMATO_HORA) : &quot;--:--&quot;;</span>
+
+<span class="fc" id="L89">            System.out.println(&quot;\nClima: &quot; + climaAtual + &quot; | Hora: &quot; + horaFormatada);</span>
+<span class="fc" id="L90">            System.out.println(&quot;Terreno: &quot; + terreno);</span>
+
+
+<span class="fc" id="L93">            Terreno terrenoAtual = servicoTerreno.gerarTerreno();</span>
+<span class="pc bpc" id="L94" title="1 of 2 branches missed.">            if (terrenoAtual.getClass() != terrenoAnterior.getClass()){</span>
+<span class="nc" id="L95">                this.terreno = terrenoAtual;</span>
+<span class="nc" id="L96">                this.terrenoAnterior = terrenoAtual;</span>
+            }
+
+            int op;
+<span class="fc" id="L100">            boolean turnoUsado = false;</span>
+<span class="fc" id="L101">            Item itemUsadoTurno = null;</span>
+<span class="fc" id="L102">            Ataque ataqueJogador = null;</span>
+
+<span class="fc bfc" id="L104" title="All 2 branches covered.">            if (jogador.usuario()){</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">                while (!turnoUsado) {</span>
+<span class="fc" id="L106">                    System.out.println(&quot;\n-SEU TURNO-&quot;);</span>
+<span class="fc" id="L107">                    System.out.println(&quot;&quot;&quot;</span>
+                            ---SELECIONE UMA AÇÃO---
+                            1. Lutar
+                            2. Mochila
+                            3. Inspecionar
+                            4. Terminar
+                            &quot;&quot;&quot;);
+<span class="fc" id="L114">                    op = sc.nextInt();</span>
+
+<span class="pc bpc" id="L116" title="2 of 5 branches missed.">                    switch (op) {</span>
+                        case 1:
+<span class="fc" id="L118">                            System.out.println(&quot;---LUTAR---&quot;);</span>
+<span class="fc" id="L119">                            List&lt;Ataque&gt; golpes = pokemonJogador.getGolpes();</span>
+<span class="fc bfc" id="L120" title="All 2 branches covered.">                            for (int i = 0; i &lt; golpes.size(); i++) {</span>
+<span class="fc" id="L121">                                System.out.println((i + 1) + &quot;. &quot; + golpes.get(i));</span>
+                            }
+
+<span class="fc" id="L124">                            int opSair = golpes.size() + 1;</span>
+<span class="fc" id="L125">                            System.out.println(opSair + &quot;. Sair&quot;);</span>
+
+<span class="fc" id="L127">                            int opAtk = sc.nextInt();</span>
+
+<span class="pc bpc" id="L129" title="1 of 2 branches missed.">                            if (!pokemonJogador.podeAgir(gerador)) {</span>
+<span class="nc" id="L130">                                System.out.println(pokemonJogador.getNome() + tagJogador + &quot; está paralisado! Não consegue se mover!&quot;);</span>
+<span class="nc" id="L131">                                turnoUsado = true;</span>
+<span class="nc" id="L132">                                break;</span>
+                            }
+
+<span class="pc bpc" id="L135" title="2 of 4 branches missed.">                            if (opAtk &gt;= 1 &amp;&amp; opAtk &lt;= golpes.size()) {</span>
+<span class="fc" id="L136">                                ataqueJogador = golpes.get(opAtk - 1);</span>
+<span class="fc" id="L137">                                turnoUsado = true;</span>
+<span class="nc bnc" id="L138" title="All 2 branches missed.">                            } else if (opAtk != opSair) {</span>
+<span class="nc" id="L139">                                System.out.println(&quot;Opção inválida.&quot;);</span>
+                            }
+                            break;
+                        case 2:
+<span class="fc" id="L143">                            System.out.println(&quot;&quot;&quot;</span>
+                                    ---USAR ITEM---
+                                    1. Poção (Cura 20HP)
+                                    2. Antídoto (Cura 'ENVENENADO')
+                                    3. Antiparalisia (Cura 'PARALISADO')
+                                    4. Antiqueimadura (Cura 'QUEIMADO')
+                                    5. Sair
+                                    &quot;&quot;&quot;);
+<span class="fc" id="L151">                            int opItem = sc.nextInt();</span>
+
+<span class="pc bpc" id="L153" title="2 of 4 branches missed.">                            if (opItem &gt;= 1 &amp;&amp; opItem &lt;= QTD_ITENS_MOCHILA) {</span>
+<span class="fc" id="L154">                                Item escolhido = jogador.mochila().getItens().get(opItem - 1);</span>
+                                try {
+<span class="fc" id="L156">                                    jogador.mochila().usarItem(escolhido, pokemonJogador);</span>
+<span class="fc" id="L157">                                    turnoUsado = true;</span>
+<span class="fc" id="L158">                                    itemUsadoTurno = escolhido;</span>
+<span class="fc" id="L159">                                    System.out.println();</span>
+<span class="nc" id="L160">                                } catch (IllegalStateException e) {</span>
+<span class="nc" id="L161">                                    System.out.println(e.getMessage());</span>
+<span class="fc" id="L162">                                }</span>
+<span class="fc" id="L163">                            } else {</span>
+<span class="nc" id="L164">                                System.out.println(&quot;Opção inválida.&quot;);</span>
+                            }
+<span class="nc" id="L166">                            break;</span>
+                        case 3:
+<span class="nc" id="L168">                            System.out.println(&quot;---INSPECIONAR---&quot;);</span>
+<span class="nc" id="L169">                            System.out.println(&quot;1. &quot; + pokemonJogador.getNome() + &quot;(&quot; + tagJogador + &quot;)&quot;);</span>
+<span class="nc" id="L170">                            System.out.println(&quot;2. &quot; + pokemonOponente.getNome() + &quot;(&quot; + tagOponente + &quot;)&quot;);</span>
+<span class="nc" id="L171">                            System.out.println(&quot;3. Sair&quot;);</span>
+<span class="nc" id="L172">                            int opInsp = sc.nextInt();</span>
+
+<span class="nc bnc" id="L174" title="All 4 branches missed.">                            switch (opInsp) {</span>
+                                case 1:
+<span class="nc" id="L176">                                    System.out.println(&quot;HP: &quot; + pokemonJogador.getHpAtual() + &quot;/&quot; + pokemonJogador.getHpMax());</span>
+<span class="nc" id="L177">                                    break;</span>
+                                case 2:
+<span class="nc" id="L179">                                    System.out.println(&quot;HP: &quot; + pokemonOponente.getHpAtual() + &quot;/&quot; + pokemonOponente.getHpMax());</span>
+<span class="nc" id="L180">                                    break;</span>
+                                case 3:
+<span class="nc" id="L182">                                    break;</span>
+                                default:
+<span class="nc" id="L184">                                    System.out.println(&quot;Opção inválida.&quot;);</span>
+                            }
+<span class="nc" id="L186">                            System.out.println();</span>
+<span class="nc" id="L187">                            break;</span>
+                        case 4:
+<span class="pc bpc" id="L189" title="1 of 2 branches missed.">                            if (!podeFugir) {</span>
+<span class="nc" id="L190">                                System.out.println(&quot;Não é possível fugir de uma batalha de treinador!&quot;);</span>
+<span class="nc" id="L191">                                break;</span>
+                            }
+<span class="fc" id="L193">                            System.out.println(&quot;Escapou com sucesso.&quot;);</span>
+<span class="fc" id="L194">                            return null;</span>
+                        default:
+<span class="nc" id="L196">                            System.out.println(&quot;Opção inválida.&quot;);</span>
+                    }
+                }
+            } else {
+<span class="pc bpc" id="L200" title="1 of 2 branches missed.">                if (!pokemonJogador.podeAgir(gerador)) {</span>
+<span class="nc" id="L201">                    System.out.println(pokemonJogador.getNome() + &quot; (&quot; + jogador.nome() + &quot;) está paralisado! Não consegue se mover!&quot;);</span>
+                } else {
+<span class="fc" id="L203">                    List&lt;Ataque&gt; golpesJogador = pokemonJogador.getGolpes();</span>
+<span class="fc" id="L204">                    ataqueJogador = golpesJogador.get((int) (gerador.gerarDouble() * golpesJogador.size()));</span>
+                }
+            }
+
+<span class="fc" id="L208">            contadorTurnos++;</span>
+
+<span class="fc" id="L210">            Ataque ataqueOponente = null;</span>
+<span class="pc bpc" id="L211" title="1 of 2 branches missed.">            if (pokemonOponente.getHpAtual() &gt; 0) {</span>
+<span class="fc" id="L212">                List&lt;Ataque&gt; golpesOponente = pokemonOponente.getGolpes();</span>
+<span class="fc" id="L213">                ataqueOponente = golpesOponente.get((int) (gerador.gerarDouble() * golpesOponente.size()));</span>
+            }
+
+<span class="fc" id="L216">            boolean batalhaEncerrada = false;</span>
+<span class="pc bpc" id="L217" title="1 of 4 branches missed.">            if (ataqueJogador != null &amp;&amp; ataqueOponente != null) {</span>
+<span class="pc bpc" id="L218" title="1 of 2 branches missed.">                if (pokemonJogador.getSpd() &gt;= pokemonOponente.getSpd()) {</span>
+<span class="fc" id="L219">                    executarTurnoJogador(ataqueJogador);</span>
+<span class="fc bfc" id="L220" title="All 2 branches covered.">                    if (pokemonOponente.getHpAtual() &gt; 0) {</span>
+<span class="fc" id="L221">                        executarTurnoOponente(ataqueOponente);</span>
+                    }
+                } else {
+<span class="nc" id="L224">                    executarTurnoOponente(ataqueOponente);</span>
+<span class="nc bnc" id="L225" title="All 2 branches missed.">                    if (pokemonJogador.getHpAtual() &gt; 0) {</span>
+<span class="nc" id="L226">                        executarTurnoJogador(ataqueJogador);</span>
+                    }
+                }
+<span class="pc bpc" id="L229" title="1 of 2 branches missed.">            } else if (ataqueJogador != null) {</span>
+<span class="nc" id="L230">                executarTurnoJogador(ataqueJogador);</span>
+<span class="pc bpc" id="L231" title="1 of 2 branches missed.">            } else if (ataqueOponente != null) {</span>
+<span class="fc" id="L232">                executarTurnoOponente(ataqueOponente);</span>
+            }
+
+<span class="fc bfc" id="L235" title="All 4 branches covered.">            if (pokemonJogador.getHpAtual() == 0 || pokemonOponente.getHpAtual() == 0) {</span>
+<span class="fc" id="L236">                batalhaEncerrada = true;</span>
+            }
+
+<span class="fc bfc" id="L239" title="All 2 branches covered.">            if (!batalhaEncerrada) {</span>
+<span class="fc" id="L240">                pokemonJogador.aplicarDanoStatus();</span>
+<span class="fc bfc" id="L241" title="All 2 branches covered.">                if (pokemonJogador.getStatus() == EfeitoStatus.QUEIMADO) {</span>
+<span class="fc" id="L242">                    System.out.println(pokemonJogador.getNome() + &quot;(&quot; + tagJogador + &quot;) sofreu dano pela queimadura!&quot; + &quot;(HP: &quot; + pokemonJogador.getHpAtual() + &quot;)&quot;);</span>
+<span class="pc bpc" id="L243" title="1 of 2 branches missed.">                } else if (pokemonJogador.getStatus() == EfeitoStatus.ENVENENADO) {</span>
+<span class="nc" id="L244">                    System.out.println(pokemonJogador.getNome() + &quot;(&quot; + tagJogador + &quot;) sofreu dano pelo veneno!&quot; + &quot;(HP: &quot; + pokemonJogador.getHpAtual() + &quot;)&quot;);</span>
+                }
+
+<span class="fc" id="L247">                pokemonOponente.aplicarDanoStatus();</span>
+<span class="pc bpc" id="L248" title="1 of 2 branches missed.">                if (pokemonOponente.getStatus() == EfeitoStatus.QUEIMADO) {</span>
+<span class="nc" id="L249">                    System.out.println(pokemonOponente.getNome() + &quot;(&quot; + tagOponente + &quot;) sofreu dano pela queimadura!&quot; + &quot;(HP: &quot; + pokemonOponente.getHpAtual() + &quot;)&quot;);</span>
+<span class="pc bpc" id="L250" title="1 of 2 branches missed.">                } else if (pokemonOponente.getStatus() == EfeitoStatus.ENVENENADO) {</span>
+<span class="nc" id="L251">                    System.out.println(pokemonOponente.getNome() + &quot;(&quot; + tagOponente + &quot;) sofreu dano pelo veneno!&quot; + &quot;(HP: &quot; + pokemonOponente.getHpAtual() + &quot;)&quot;);</span>
+                }
+
+<span class="fc" id="L254">                terreno.curaTerreno(pokemonJogador);</span>
+<span class="fc" id="L255">                terreno.curaTerreno(pokemonOponente);</span>
+
+<span class="fc" id="L257">                System.out.println(pokemonJogador.getNome() + &quot;(&quot; + tagJogador + &quot;): &quot; + pokemonJogador.getHpAtual() + &quot;/&quot; + pokemonJogador.getHpMax() + &quot; HP&quot;);</span>
+<span class="fc" id="L258">                System.out.println(pokemonOponente.getNome() + &quot;(&quot; + tagOponente + &quot;): &quot; + pokemonOponente.getHpAtual() + &quot;/&quot; + pokemonOponente.getHpMax() + &quot; HP&quot;);</span>
+            }
+<span class="fc bfc" id="L260" title="All 2 branches covered.">            if (itemUsadoTurno != null){</span>
+<span class="fc" id="L261">                registro.registrarItem(itemUsadoTurno);</span>
+            }
+<span class="fc" id="L263">        }</span>
+<span class="fc" id="L264">        jogador.mochila().resetarUso();</span>
+
+<span class="fc bfc" id="L266" title="All 2 branches covered.">        if (pokemonJogador.getHpAtual() == 0) {</span>
+<span class="fc" id="L267">            System.out.println(pokemonJogador.getNome() + &quot; (&quot; + tagJogador + &quot;) desmaiou! &quot; + oponente.getNome() + &quot; venceu!&quot;);</span>
+<span class="fc" id="L268">            vencedor = oponente;</span>
+<span class="fc" id="L269">            perdedor = jogador;</span>
+<span class="pc bpc" id="L270" title="1 of 2 branches missed.">        } else if (pokemonOponente.getHpAtual() == 0) {</span>
+<span class="fc" id="L271">            System.out.println(pokemonOponente.getNome() + &quot; (&quot; + tagOponente + &quot;) desmaiou! &quot; + jogador.getNome() + &quot; venceu!&quot;);</span>
+<span class="fc" id="L272">            vencedor = jogador;</span>
+<span class="fc" id="L273">            perdedor = oponente;</span>
+        }
+
+<span class="fc" id="L276">        ResultadoBatalha resultado = new ResultadoBatalha(vencedor, perdedor, contadorTurnos, pokemonsUsados);</span>
+
+        try {
+<span class="fc" id="L279">            repositorio.salvarResultados(resultado);</span>
+<span class="fc" id="L280">        } catch (Exception e){</span>
+<span class="fc" id="L281">            System.err.println(&quot;Não foi possível salvar o resultado &quot; + e.getMessage());</span>
+<span class="fc" id="L282">        }</span>
+
+<span class="fc" id="L284">        return resultado;</span>
+    }
+
+    private void executarTurnoJogador(Ataque ataqueJogador){
+<span class="fc" id="L288">        executarAtaque(pokemonJogador, pokemonOponente, ataqueJogador);</span>
+<span class="fc" id="L289">    }</span>
+
+    private void executarTurnoOponente(Ataque ataqueOponente){
+<span class="fc" id="L292">        System.out.println(&quot;\n-TURNO DO OPONENTE-&quot;);</span>
+<span class="pc bpc" id="L293" title="1 of 2 branches missed.">        if (!pokemonOponente.podeAgir(gerador)){</span>
+<span class="nc" id="L294">            System.out.println(pokemonOponente.getNome() + &quot;(&quot; + tagOponente + &quot;) está paralisado! Não consegue se mover!&quot;);</span>
+<span class="nc" id="L295">            return;</span>
+        }
+<span class="fc" id="L297">        executarAtaque(pokemonOponente, pokemonJogador, ataqueOponente);</span>
+<span class="fc" id="L298">    }</span>
+
+    private void executarAtaque(Pokemon atacante, Pokemon alvo, Ataque ataqueSelec){
+<span class="fc" id="L301">        System.out.println(atacante.getNome() + &quot; usou &quot; + ataqueSelec.nome() + &quot;.&quot;);</span>
+<span class="fc" id="L302">        registro.registrarAtaque(ataqueSelec);</span>
+
+<span class="pc bpc" id="L304" title="1 of 2 branches missed.">        if (ataqueSelec.ativaTerreno() != null){</span>
+<span class="nc bnc" id="L305" title="All 2 branches missed.">            if (this.terreno.getClass() == ataqueSelec.ativaTerreno().getClass()){</span>
+<span class="nc" id="L306">                System.out.println(&quot;Mas falhou.&quot;);</span>
+            } else {
+<span class="nc" id="L308">                this.terreno = ataqueSelec.ativaTerreno();</span>
+<span class="nc" id="L309">                System.out.println(&quot;O terreno mudou para &quot; + terreno.getClass().getSimpleName());</span>
+            }
+        }
+
+<span class="fc bfc" id="L313" title="All 2 branches covered.">        if (ataqueSelec.poder() &gt; 0){</span>
+<span class="fc" id="L314">            int dano = calcDano.calcularDano(ataqueSelec, atacante, alvo, terreno);</span>
+<span class="fc" id="L315">            registro.registrarDano(dano);</span>
+
+<span class="fc bfc" id="L317" title="All 2 branches covered.">            if (dano == 0) {</span>
+<span class="fc" id="L318">                System.out.println(alvo.getNome() + &quot; desviou do ataque.&quot;);</span>
+<span class="fc" id="L319">                return;</span>
+            }
+
+<span class="fc" id="L322">            alvo.receberDano(dano);</span>
+
+<span class="fc" id="L324">            double efet = CalcDano.calcEfet(ataqueSelec, alvo.getTipo());</span>
+<span class="pc bpc" id="L325" title="1 of 2 branches missed.">            if (efet == CalcDano.SUPER_EFETIVO){</span>
+<span class="nc" id="L326">                System.out.println(&quot;É super efetivo!&quot;);</span>
+<span class="pc bpc" id="L327" title="1 of 2 branches missed.">            } else if (efet == CalcDano.POUCO_EFETIVO){</span>
+<span class="nc" id="L328">                System.out.println(&quot;Não é muito efetivo...&quot;);</span>
+            }
+
+<span class="pc bpc" id="L331" title="1 of 2 branches missed.">            if(calcDano.foiCritico()){</span>
+<span class="nc" id="L332">                System.out.println(&quot;Foi um acerto crítico!&quot;);</span>
+            }
+
+<span class="fc" id="L335">            System.out.println(&quot;Dano causado: &quot; + dano + &quot;HP.&quot;);</span>
+        }
+
+<span class="pc bpc" id="L338" title="1 of 2 branches missed.">        if (ataqueSelec.buffUsuario() != null){</span>
+<span class="nc" id="L339">            Buff buff = ataqueSelec.buffUsuario();</span>
+<span class="nc" id="L340">            aplicarBuff(atacante, &quot;ataque&quot;, buff.getAtk());</span>
+<span class="nc" id="L341">            aplicarBuff(atacante, &quot;defesa&quot;, buff.getDef());</span>
+<span class="nc" id="L342">            aplicarBuff(atacante, &quot;velocidade&quot;, buff.getSpd());</span>
+        }
+
+<span class="pc bpc" id="L345" title="1 of 2 branches missed.">        if (ataqueSelec.buffAlvo() != null){</span>
+<span class="nc" id="L346">            Buff buff = ataqueSelec.buffAlvo();</span>
+<span class="nc" id="L347">            aplicarBuff(alvo, &quot;ataque&quot;, buff.getAtk());</span>
+<span class="nc" id="L348">            aplicarBuff(alvo, &quot;defesa&quot;, buff.getDef());</span>
+<span class="nc" id="L349">            aplicarBuff(alvo, &quot;velocidade&quot;, buff.getSpd());</span>
+        }
+
+<span class="fc bfc" id="L352" title="All 2 branches covered.">        if (ataqueSelec.status() != EfeitoStatus.NENHUM){</span>
+<span class="pc bpc" id="L353" title="1 of 2 branches missed.">            if (alvo.getStatus() != EfeitoStatus.NENHUM){</span>
+<span class="nc bnc" id="L354" title="All 2 branches missed.">                if (ataqueSelec.poder() == 0){</span>
+<span class="nc" id="L355">                    System.out.println(&quot;Mas falhou.&quot;);</span>
+                }
+<span class="pc bpc" id="L357" title="1 of 2 branches missed.">            } else if (ataqueSelec.chanceStatus(gerador)){</span>
+<span class="fc" id="L358">                alvo.setStatus(ataqueSelec.status());</span>
+<span class="fc" id="L359">                EfeitoStatus statusAlvo = alvo.getStatus();</span>
+
+<span class="fc bfc" id="L361" title="All 2 branches covered.">                if (statusAlvo == EfeitoStatus.PARALISADO){</span>
+<span class="fc" id="L362">                    System.out.println(alvo.getNome() + &quot; está paralisado! Talvez não consiga se mover!&quot;);</span>
+<span class="pc bpc" id="L363" title="1 of 2 branches missed.">                } else if (statusAlvo == EfeitoStatus.QUEIMADO){</span>
+<span class="fc" id="L364">                    System.out.println(alvo.getNome() + &quot; foi queimado!&quot;);</span>
+<span class="nc bnc" id="L365" title="All 2 branches missed.">                } else if (statusAlvo == EfeitoStatus.ENVENENADO){</span>
+<span class="nc" id="L366">                    System.out.println(alvo.getNome() + &quot; foi envenenado!&quot;);</span>
+                }
+<span class="fc" id="L368">                registro.registrarEfeitoStatus(statusAlvo);</span>
+            }
+        }
+<span class="fc" id="L371">        registro.registrarEfeitoTerreno(terreno);</span>
+
+<span class="fc bfc" id="L373" title="All 2 branches covered.">        if (alvo.getHpAtual() == 0){</span>
+<span class="fc" id="L374">            System.out.println(alvo.getNome() + &quot; desmaiou!&quot;);</span>
+        }
+<span class="fc" id="L376">    }</span>
+
+    private void aplicarBuff(Pokemon alvo, String nomeAtributo, int delta){
+<span class="nc bnc" id="L379" title="All 4 branches missed.">        int estagioAtual = switch (nomeAtributo){</span>
+<span class="nc" id="L380">            case &quot;ataque&quot; -&gt; alvo.getEstagioAtk();</span>
+<span class="nc" id="L381">            case &quot;defesa&quot; -&gt; alvo.getEstagioDef();</span>
+<span class="nc" id="L382">            case &quot;velocidade&quot; -&gt; alvo.getEstagioSpd();</span>
+<span class="nc" id="L383">            default -&gt; 0;</span>
+        };
+
+<span class="nc bnc" id="L386" title="All 4 branches missed.">        if (delta &gt; 0 &amp;&amp; estagioAtual == ESTAGIO_MAX){</span>
+<span class="nc" id="L387">            System.out.println(nomeAtributo + &quot; de &quot; + alvo.getNome() + &quot; não consegue aumentar mais!&quot;);</span>
+<span class="nc bnc" id="L388" title="All 4 branches missed.">        } else if (delta &lt; 0 &amp;&amp; estagioAtual == ESTAGIO_MIN){</span>
+<span class="nc" id="L389">            System.out.println(nomeAtributo + &quot; de &quot; + alvo.getNome() + &quot; não consegue diminuir mais!&quot;);</span>
+<span class="nc bnc" id="L390" title="All 2 branches missed.">        } else if (delta != 0){</span>
+<span class="nc bnc" id="L391" title="All 4 branches missed.">            switch (nomeAtributo){</span>
+<span class="nc" id="L392">                case &quot;ataque&quot; -&gt; alvo.alterarAtk(delta);</span>
+<span class="nc" id="L393">                case &quot;defesa&quot; -&gt; alvo.alterarDef(delta);</span>
+<span class="nc" id="L394">                case &quot;velocidade&quot; -&gt; alvo.alterarSpd(delta);</span>
+            }
+<span class="nc bnc" id="L396" title="All 2 branches missed.">            System.out.println(nomeAtributo + &quot; de &quot; + alvo.getNome() + (delta &gt; 0 ? &quot; aumentou!&quot; : &quot; diminuiu!&quot;));</span>
+        }
+<span class="nc" id="L398">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

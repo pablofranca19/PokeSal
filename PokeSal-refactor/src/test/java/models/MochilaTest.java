@@ -1,6 +1,6 @@
 package models;
 
-import models.Inicial;
+import models.Pokemon;
 import models.enums.Tipo;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +23,7 @@ class MochilaTest {
         mochila.adicionarItem(pocao2);
         mochila.adicionarItem(pocao3);
 
-        Inicial pokesal = new Inicial("Teste", Tipo.NORMAL, 100, 50, 50, 50);
+        Pokemon pokesal = new Pokemon("Teste", Tipo.NORMAL, 100, 50, 50, 50);
         pokesal.receberDano(50);
 
         assertDoesNotThrow(() -> mochila.usarItem(pocao1, pokesal));
@@ -43,7 +43,7 @@ class MochilaTest {
         mochila.adicionarItem(pocao1);
         mochila.adicionarItem(pocao2);
 
-        Inicial pokesal = new Inicial("Teste", Tipo.NORMAL, 100, 50, 50, 50);
+        Pokemon pokesal = new Pokemon("Teste", Tipo.NORMAL, 100, 50, 50, 50);
         pokesal.receberDano(50);
 
         mochila.usarItem(pocao1, pokesal);

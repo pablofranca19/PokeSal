@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ChikoSal.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">models.pokesal</a> &gt; <span class="el_source">ChikoSal.java</span></div><h1>ChikoSal.java</h1><pre class="source lang-java linenums">package models.pokesal;
+
+import models.Pokemon;
+import models.enums.EfeitoStatus;
+import models.terrains.Canteiro;
+import models.enums.Tipo;
+import utils.Ataque;
+
+public class ChikoSal extends Pokemon {
+    public ChikoSal(){
+<span class="fc" id="L11">        super(&quot;ChikoSal&quot;, Tipo.PLANTA, 45, 49, 65, 45);</span>
+<span class="fc" id="L12">        this.golpes.add(new Ataque(&quot;Pancada Corporal&quot;, Tipo.NORMAL, 30, EfeitoStatus.PARALISADO, 0.3, 95));</span>
+<span class="fc" id="L13">        this.golpes.add(new Ataque(&quot;Folha Cortante&quot;, Tipo.PLANTA, 55, EfeitoStatus.NENHUM, 0.0, 95));</span>
+<span class="fc" id="L14">        this.golpes.add(new Ataque(&quot;Pó Venenoso&quot;, Tipo.VENENO, 0, EfeitoStatus.ENVENENADO, 1.0, 75));</span>
+<span class="fc" id="L15">        this.golpes.add(new Ataque(&quot;Terreno Gramado&quot;, Tipo.PLANTA, 0, EfeitoStatus.NENHUM, 0.0, new Canteiro()));</span>
+<span class="fc" id="L16">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

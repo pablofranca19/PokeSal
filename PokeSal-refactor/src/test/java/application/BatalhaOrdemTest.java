@@ -1,6 +1,6 @@
 package application;
 
-import models.Inicial;
+import models.Pokemon;
 import models.enums.EfeitoStatus;
 import models.enums.Tipo;
 import org.junit.jupiter.api.Test;
@@ -9,15 +9,15 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BatalhaOrdemTest {
 
-    private boolean jogadorAgePrimeiro(Inicial jogador, Inicial oponente) {
+    private boolean jogadorAgePrimeiro(Pokemon jogador, Pokemon oponente) {
         return jogador.getSpd() >= oponente.getSpd();
     }
 
     @Test
     @DisplayName("orrdem de ataque por velocidade, quem tem maior SPD age primeiro")
     void testOrdemDeAtaquePorVelocidade() {
-        Inicial rapido = new Inicial("Rapido", Tipo.NORMAL, 100, 50, 50, 100);
-        Inicial lento = new Inicial("Lento", Tipo.NORMAL, 100, 50, 50, 10);
+        Pokemon rapido = new Pokemon("Rapido", Tipo.NORMAL, 100, 50, 50, 100);
+        Pokemon lento = new Pokemon("Lento", Tipo.NORMAL, 100, 50, 50, 10);
 
         assertTrue(jogadorAgePrimeiro(rapido, lento),
                 "PokéSal com maior SPD deveria agir primeiro");
@@ -28,8 +28,8 @@ class BatalhaOrdemTest {
     @Test
     @DisplayName("Ordem de ataque por velocidade em caso de empate, o jogador age primeiro")
     void testOrdemDeAtaquePorVelocidade_empate() {
-        Inicial jogador = new Inicial("Jogador", Tipo.NORMAL, 100, 50, 50, 50);
-        Inicial oponente = new Inicial("Oponente", Tipo.NORMAL, 100, 50, 50, 50);
+        Pokemon jogador = new Pokemon("Jogador", Tipo.NORMAL, 100, 50, 50, 50);
+        Pokemon oponente = new Pokemon("Oponente", Tipo.NORMAL, 100, 50, 50, 50);
 
         assertTrue(jogadorAgePrimeiro(jogador, oponente),
                 "no caso de empate de spd, a regra do jogo é o jogador agir primeiro");
@@ -38,8 +38,8 @@ class BatalhaOrdemTest {
     @Test
     @DisplayName("Ordem de ataque por velocidafe paralisia reduz a SPD efetiva pela metade e pode inverter a ordem")
     void testOrdemDeAtaquePorVelocidade_paralisiaAlteraOrdem() {
-        Inicial jogadorParalisado = new Inicial("Jogador", Tipo.NORMAL, 100, 50, 50, 100);
-        Inicial oponente = new Inicial("Oponente", Tipo.NORMAL, 100, 50, 50, 60);
+        Pokemon jogadorParalisado = new Pokemon("Jogador", Tipo.NORMAL, 100, 50, 50, 100);
+        Pokemon oponente = new Pokemon("Oponente", Tipo.NORMAL, 100, 50, 50, 60);
 
         assertTrue(jogadorAgePrimeiro(jogadorParalisado, oponente));
 

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Torneio.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">Torneio.java</span></div><h1>Torneio.java</h1><pre class="source lang-java linenums">package utils;
+
+import models.Pokemon;
+import models.Treinador;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Torneio {
+    private static final int MINIMO_PARTICIPANTES = 4;
+    private static final int MAXIMO_PARTICIPANTES = 8;
+
+    private final List&lt;Treinador&gt; participantes;
+    private final ExecutorBatalha executor;
+    private final RepositorioResultados repositorio;
+
+<span class="fc" id="L17">    public Torneio(List&lt;Treinador&gt; participantes, ExecutorBatalha executor, RepositorioResultados repositorio) {</span>
+<span class="pc bpc" id="L18" title="2 of 6 branches missed.">        if (participantes == null || (participantes.size() != MINIMO_PARTICIPANTES &amp;&amp; participantes.size() != MAXIMO_PARTICIPANTES)){</span>
+<span class="fc" id="L19">            throw new IllegalArgumentException(&quot;O torneio deve ter 4 OU 8 participantes.&quot;);</span>
+<span class="pc bpc" id="L20" title="3 of 6 branches missed.">        } else if (participantes.contains(null) || executor == null || repositorio == null){</span>
+<span class="nc" id="L21">            throw new IllegalArgumentException(&quot;Argumento inválido. Nenhum parâmetro pode ser nulo.&quot;);</span>
+        }
+<span class="fc" id="L23">        this.participantes = List.copyOf(participantes);</span>
+<span class="fc" id="L24">        this.executor = executor;</span>
+<span class="fc" id="L25">        this.repositorio = repositorio;</span>
+<span class="fc" id="L26">    }</span>
+
+    public Treinador iniciarTorneio(){
+<span class="fc" id="L29">        List&lt;Treinador&gt; rodadaAtual = new ArrayList&lt;&gt;(participantes);</span>
+
+<span class="fc bfc" id="L31" title="All 2 branches covered.">        while (rodadaAtual.size() &gt; 1){</span>
+<span class="fc" id="L32">            List&lt;Treinador&gt; proximaRodada = new ArrayList&lt;&gt;();</span>
+
+<span class="fc bfc" id="L34" title="All 2 branches covered.">            for (int i = 0; i &lt; rodadaAtual.size(); i += 2){</span>
+<span class="fc" id="L35">                Treinador t1 = rodadaAtual.get(i);</span>
+<span class="fc" id="L36">                Treinador t2 = rodadaAtual.get(i+1);</span>
+
+<span class="fc" id="L38">                ResultadoBatalha resultado = executor.executar(t1, t2);</span>
+
+<span class="pc bpc" id="L40" title="1 of 4 branches missed.">                if (resultado == null || resultado.vencedor() == null){</span>
+<span class="fc" id="L41">                    throw new IllegalStateException(&quot;Batalha encerrada sem vencedor.&quot;);</span>
+                }
+
+                try {
+<span class="fc" id="L45">                    repositorio.salvarResultados(resultado);</span>
+<span class="fc" id="L46">                } catch (Exception e){</span>
+<span class="fc" id="L47">                    System.err.println(&quot;Não foi possível salvar o resultado &quot; + e.getMessage());</span>
+<span class="fc" id="L48">                }</span>
+
+<span class="fc" id="L50">                Treinador vencedor = resultado.vencedor();</span>
+<span class="fc" id="L51">                vencedor.getPokemons().forEach(Pokemon::restaurar);</span>
+<span class="fc" id="L52">                proximaRodada.add(vencedor);</span>
+            }
+
+<span class="fc" id="L55">            rodadaAtual = proximaRodada;</span>
+<span class="fc" id="L56">        }</span>
+
+<span class="fc" id="L58">        return rodadaAtual.getFirst();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

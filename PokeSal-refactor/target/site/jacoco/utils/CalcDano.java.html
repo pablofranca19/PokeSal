@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CalcDano.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">CalcDano.java</span></div><h1>CalcDano.java</h1><pre class="source lang-java linenums">package utils;
+
+import models.Pokemon;
+import models.terrains.Terreno;
+import models.enums.Tipo;
+import services.GeradorDoubleAleatorio;
+import services.GeradorInteiroAleatorio;
+
+public class CalcDano {
+    private static final int NIVEL = 5;
+    protected static final double SUPER_EFETIVO = 2.0;
+    protected static final double POUCO_EFETIVO = 0.5;
+    protected static final double NEUTRO = 1.0;
+    private static final int FATOR_NIVEL = 2;
+    private static final int CONST_NIVEL = 10;
+    private static final double DIVISOR = 250.0;
+    private static final int CONST_FINAL = 2;
+    private static final double MULTI_CRIT = 1.5;
+    private static final double MULT_STAB = 1.5;
+    private static final double CHANCE_CRIT = 0.0625;
+    private final GeradorDoubleAleatorio geradorDouble;
+    private final GeradorInteiroAleatorio geradorInt;
+<span class="fc" id="L23">    private boolean foiCrit = false;</span>
+
+<span class="fc" id="L25">    public CalcDano(GeradorDoubleAleatorio geradorDouble, GeradorInteiroAleatorio geradorInt){</span>
+<span class="fc" id="L26">        this.geradorDouble = geradorDouble;</span>
+<span class="fc" id="L27">        this.geradorInt = geradorInt;</span>
+<span class="fc" id="L28">    }</span>
+
+    public static double calcEfet(Ataque atk, Tipo defensor) {
+<span class="fc bfc" id="L31" title="All 5 branches covered.">        return switch (atk.tipo()) {</span>
+<span class="pc bpc" id="L32" title="1 of 4 branches missed.">            case Tipo.PLANTA -&gt; (defensor == Tipo.AGUA) ? SUPER_EFETIVO : (defensor == Tipo.FOGO ? POUCO_EFETIVO : NEUTRO);</span>
+<span class="fc bfc" id="L33" title="All 4 branches covered.">            case Tipo.FOGO -&gt; (defensor == Tipo.PLANTA) ? SUPER_EFETIVO : (defensor == Tipo.AGUA ? POUCO_EFETIVO : NEUTRO);</span>
+<span class="pc bpc" id="L34" title="1 of 4 branches missed.">            case Tipo.AGUA -&gt; (defensor == Tipo.FOGO) ? SUPER_EFETIVO : (defensor == Tipo.PLANTA ? POUCO_EFETIVO : NEUTRO);</span>
+<span class="fc bfc" id="L35" title="All 4 branches covered.">            case Tipo.ELETRICO -&gt; (defensor == Tipo.AGUA) ? SUPER_EFETIVO : (defensor == Tipo.PLANTA ? POUCO_EFETIVO : NEUTRO);</span>
+<span class="fc" id="L36">            default -&gt; NEUTRO;</span>
+        };
+    }
+
+    public static boolean calcSTAB(Pokemon atacante, Ataque atk) {
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        return (atacante.getTipo() == atk.tipo());</span>
+    }
+
+    private boolean calcCrit() {
+<span class="fc bfc" id="L45" title="All 2 branches covered.">        return geradorDouble.gerarDouble() &lt; CHANCE_CRIT;</span>
+    }
+
+    public int calcularDano(Ataque atk, Pokemon atacante, Pokemon alvo, Terreno terreno) {
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (geradorInt.gerarInt() &gt; atk.precisao()) {</span>
+<span class="fc" id="L50">            foiCrit = false;</span>
+<span class="fc" id="L51">            return 0;</span>
+        }
+
+<span class="fc" id="L54">        double mult = calcEfet(atk, alvo.getTipo());</span>
+<span class="fc" id="L55">        double modTerreno = terreno.getMod(atk.tipo());</span>
+<span class="fc" id="L56">        double crit = NEUTRO;</span>
+<span class="fc" id="L57">        double stab = NEUTRO;</span>
+
+<span class="fc bfc" id="L59" title="All 2 branches covered.">        if (calcCrit()){</span>
+<span class="fc" id="L60">            crit = MULTI_CRIT;</span>
+<span class="fc" id="L61">            foiCrit = true;</span>
+        } else {
+<span class="fc" id="L63">            foiCrit = false;</span>
+        }
+
+<span class="fc bfc" id="L66" title="All 2 branches covered.">        if (calcSTAB(atacante, atk)) {</span>
+<span class="fc" id="L67">            stab = MULT_STAB;</span>
+        }
+
+<span class="fc" id="L70">        double dano = (((FATOR_NIVEL * NIVEL + CONST_NIVEL)/DIVISOR)</span>
+<span class="fc" id="L71">                * ((double) atacante.getAtk()/alvo.getDef())</span>
+<span class="fc" id="L72">                * atk.poder() + CONST_FINAL)</span>
+                * mult * modTerreno * crit * stab;
+
+<span class="fc" id="L75">        return (int) dano;</span>
+    }
+
+    public boolean foiCritico(){
+<span class="fc" id="L79">        return foiCrit;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
