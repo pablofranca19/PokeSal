@@ -24,14 +24,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * Torneio isolado das batalhas reais e do repositório.
- * Mockados: ExecutorBatalha (decide quem vence) e RepositorioResultados.
- * Não mockados: Treinador, Pokemon e Mochila (dados puros).
- */
 @ExtendWith(MockitoExtension.class)
 class TorneioMockitoTest {
-
     @Mock
     private ExecutorBatalha executor;
     @Mock
@@ -49,10 +43,6 @@ class TorneioMockitoTest {
                 List.of(vencedor.getPokemons().getFirst(), perdedor.getPokemons().getFirst()));
     }
 
-    /**
-     * Lista MUTÁVEL de propósito: o construtor do Torneio chama participantes.contains(null), e isso lança
-     * NullPointerException em listas imutáveis (List.of). Bug registrado no relatório (ver resumo da entrega).
-     */
     private List<Treinador> participantes(Treinador... ts) {
         return new ArrayList<>(List.of(ts));
     }
@@ -68,10 +58,9 @@ class TorneioMockitoTest {
     @Test
     @DisplayName("Chaveamento de 4: resultados mockados definem quem avança até o campeão")
     void testChaveamentoTorneioAvancaVencedores() {
-        // valores exatos (e não any()) porque o que se testa é QUEM enfrenta QUEM em cada fase
-        when(executor.executar(t1, t2)).thenReturn(resultado(t1, t2)); // semifinal 1: T1 avança
-        when(executor.executar(t3, t4)).thenReturn(resultado(t4, t3)); // semifinal 2: T4 avança
-        when(executor.executar(t1, t4)).thenReturn(resultado(t4, t1)); // final: T4 campeão
+        when(executor.executar(t1, t2)).thenReturn(resultado(t1, t2));
+        when(executor.executar(t3, t4)).thenReturn(resultado(t4, t3));
+        when(executor.executar(t1, t4)).thenReturn(resultado(t4, t1));
 
         Treinador campeao = new Torneio(participantes(t1, t2, t3, t4), executor, repositorio).iniciarTorneio();
 

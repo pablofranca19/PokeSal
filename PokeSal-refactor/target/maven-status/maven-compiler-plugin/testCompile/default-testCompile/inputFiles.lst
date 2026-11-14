@@ -1,11 +1,18 @@
-C:\PokeSal-refactor\src\test\java\services\TerrenoServiceMockitoTest.java
-C:\PokeSal-refactor\src\test\java\utils\TorneioMockitoTest.java
-C:\PokeSal-refactor\src\test\java\support\PokemonDeTeste.java
-C:\PokeSal-refactor\src\test\java\models\RequisitosAutoraisTest.java
-C:\PokeSal-refactor\src\test\java\models\MochilaTest.java
-C:\PokeSal-refactor\src\test\java\application\BatalhaMockitoTest.java
-C:\PokeSal-refactor\src\test\java\models\RequisitosAutoraisMockitoTest.java
-C:\PokeSal-refactor\src\test\java\utils\CalcDanoTest.java
-C:\PokeSal-refactor\src\test\java\utils\TerrenoTest.java
-C:\PokeSal-refactor\src\test\java\utils\CalcDanoMockitoTest.java
-C:\PokeSal-refactor\src\test\java\application\BatalhaOrdemTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/support/PokemonDeTeste.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/application/BatalhaMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/RepositorioResultadosMemoriaTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/TorneioValidacaoMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/services/TerrenoServiceMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/CalcDanoMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/TorneioMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/models/RequisitosAutoraisMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/GerarTreinadorMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/CalcDanoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/models/MochilaTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/MochilaMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/CuraStatusMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/RegistroBatalhaMemoriaTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/application/BatalhaOrdemTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/application/BatalhaCaminhosMockitoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/TerrenoTest.java
+/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/test/java/utils/BuffTest.java

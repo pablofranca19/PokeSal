@@ -11,7 +11,6 @@ import utils.Pocao;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MochilaTest {
-
     @Test
     @DisplayName("lança IllegalStateException ao exceder o limite de 2 itens por batalha")
     void testUsoLimiteDeItensExcedido() {

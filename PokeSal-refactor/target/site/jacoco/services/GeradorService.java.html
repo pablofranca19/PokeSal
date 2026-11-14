@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeradorService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">services</a> &gt; <span class="el_source">GeradorService.java</span></div><h1>GeradorService.java</h1><pre class="source lang-java linenums">package services;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GeradorService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">services</a> &gt; <span class="el_source">GeradorService.java</span></div><h1>GeradorService.java</h1><pre class="source lang-java linenums">package services;
 
 import java.util.Random;
 
-<span class="fc" id="L5">public class GeradorService implements GeradorDoubleAleatorio, GeradorInteiroAleatorio {</span>
-<span class="fc" id="L6">    private static final Random RANDOM = new Random();</span>
+<span class="nc" id="L5">public class GeradorService implements GeradorDoubleAleatorio, GeradorInteiroAleatorio {</span>
+<span class="nc" id="L6">    private static final Random RANDOM = new Random();</span>
     private static final int PRECISAO_MINIMA = 0;
     private static final int PRECISAO_MAXIMA = 100;
 
     @Override
     public double gerarDouble() {
-<span class="fc" id="L12">        return RANDOM.nextDouble();</span>
+<span class="nc" id="L12">        return RANDOM.nextDouble();</span>
     }
 
     @Override
     public int gerarInt() {
-<span class="fc" id="L17">        return RANDOM.nextInt(PRECISAO_MINIMA, PRECISAO_MAXIMA + 1);</span>
+<span class="nc" id="L17">        return RANDOM.nextInt(PRECISAO_MINIMA, PRECISAO_MAXIMA + 1);</span>
     }
 
     @Override
@@ -22,4 +22,4 @@ import java.util.Random;
 <span class="nc" id="L22">        return RANDOM.nextInt(limite);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>

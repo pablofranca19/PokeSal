@@ -22,16 +22,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * CalcDano isolado dos geradores aleatórios.
- *
- * @InjectMocks cria o CalcDano real passando pelo construtor os dois @Mock (injeção por construtor).
- * Mockados: GeradorDoubleAleatorio (crítico) e GeradorInteiroAleatorio (precisão).
- * Não mockados: Pokemon, Ataque e Terreno (dados puros).
- */
 @ExtendWith(MockitoExtension.class)
 class CalcDanoMockitoTest {
-
     @Mock
     private GeradorDoubleAleatorio geradorDouble;
     @Mock
@@ -39,8 +31,7 @@ class CalcDanoMockitoTest {
     @InjectMocks
     private CalcDano calcDano;
 
-    private final Terreno terreno = new Canteiro(); // modificador 1.0 para qualquer tipo
-    // atacante NORMAL usando golpe de FOGO: sem STAB; alvo NORMAL: efetividade neutra
+    private final Terreno terreno = new Canteiro();
     private final Pokemon atacante = new Pokemon("Atacante", Tipo.NORMAL, 100, 100, 50, 50);
     private final Pokemon alvo = new Pokemon("Alvo", Tipo.NORMAL, 100, 50, 50, 50);
 
@@ -51,8 +42,7 @@ class CalcDanoMockitoTest {
     @Test
     @DisplayName("Acerto crítico: gerador dentro da faixa (< 6,25%) multiplica o dano por 1.5")
     void testAcertoCriticoComGeradorMockado() {
-        when(geradorInt.gerarInt()).thenReturn(50); // 50 <= precisão 100: acerta
-        // retornos em sequência: 1ª chamada dentro da faixa crítica, 2ª fora dela
+        when(geradorInt.gerarInt()).thenReturn(50);
         when(geradorDouble.gerarDouble()).thenReturn(0.01, 0.50);
 
         int danoCritico = calcDano.calcularDano(golpe(100), atacante, alvo, terreno);
@@ -81,7 +71,7 @@ class CalcDanoMockitoTest {
     @Test
     @DisplayName("Golpe erra quando o número sorteado passa da precisão: dano 0 e HP do alvo inalterado")
     void testGolpeErraQuandoPrecisaoFalha() {
-        when(geradorInt.gerarInt()).thenReturn(95); // 95 > precisão 80: erra
+        when(geradorInt.gerarInt()).thenReturn(95);
         int hpAntes = alvo.getHpAtual();
 
         int dano = calcDano.calcularDano(golpe(80), atacante, alvo, terreno);
@@ -89,7 +79,6 @@ class CalcDanoMockitoTest {
         assertEquals(0, dano);
         assertEquals(hpAntes, alvo.getHpAtual());
         assertFalse(calcDano.foiCritico());
-        // errou -> nem chega a sortear crítico
         verify(geradorDouble, never()).gerarDouble();
     }
 

@@ -38,27 +38,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-/**
- * Testes com Mockito dos 2 requisitos autorais da Fase 03.
- *
- *  RA-1: o Pokémon inicial deixa de ser escolhido diretamente e passa a ser sorteado ("procurar no mato").
- *        Colaboradores mockados: GeradorInteiroAleatorio (o sorteio) e PokemonAbstractFactory (a fábrica).
- *  RA-2: novo PokéSal do tipo elétrico, o PikaSal.
- *        Colaboradores mockados: GeradorDoubleAleatorio / GeradorInteiroAleatorio (chance de status, precisão,
- *        crítico), RegistroBatalha, ServicoTerreno, etc.
- *
- * Não mockados: PikaSal, Pokemon, Ataque e Terreno (objetos de domínio sem aleatoriedade nem I/O).
- */
 @ExtendWith(MockitoExtension.class)
 class RequisitosAutoraisMockitoTest {
-
-    // =====================================================================================
-    // RA-1: Pokémon inicial aleatório
-    // =====================================================================================
     @Nested
     @DisplayName("RA-1: Pokémon inicial sorteado")
     class InicialAleatorio {
-
         @Mock
         private GeradorInteiroAleatorio gerador;
         @Mock
@@ -106,7 +90,6 @@ class RequisitosAutoraisMockitoTest {
         @Test
         @DisplayName("RA-1: sorteios diferentes devolvem Pokémon diferentes, na ordem em que foram sorteados")
         void testRA1_SorteiosSucessivosDevolvemPokemonsDiferentes() {
-            // retornos em sequência: 0, 2, 1
             when(gerador.gerarInt(3)).thenReturn(0, 2, 1);
             when(fabrica0.criarPokemon()).thenReturn(pokemon0);
             when(fabrica1.criarPokemon()).thenReturn(pokemon1);
@@ -127,7 +110,6 @@ class RequisitosAutoraisMockitoTest {
         @Test
         @DisplayName("RA-1: com a lista padrão, os 7 PokéSal podem ser sorteados (inclusive o PikaSal)")
         void testRA1_ListaPadraoCobreOsSetePokesal() {
-            // o gerador mockado "percorre" todos os índices possíveis, de 0 a 6
             when(gerador.gerarInt(7)).thenReturn(0, 1, 2, 3, 4, 5, 6);
             GerarInicial gerarInicial = new GerarInicial(gerador);
 
@@ -161,13 +143,9 @@ class RequisitosAutoraisMockitoTest {
         }
     }
 
-    // =====================================================================================
-    // RA-2: PikaSal (elétrico)
-    // =====================================================================================
     @Nested
     @DisplayName("RA-2: PikaSal (tipo elétrico)")
     class PikaSalEletrico {
-
         @Mock
         private GeradorDoubleAleatorio geradorDouble;
         @Mock
@@ -175,7 +153,7 @@ class RequisitosAutoraisMockitoTest {
         @InjectMocks
         private CalcDano calcDano;
 
-        private final Terreno terreno = new Canteiro(); // modificador 1.0
+        private final Terreno terreno = new Canteiro();
         private final PikaSal pikaSal = new PikaSal();
 
         private Ataque golpe(String nome) {
@@ -200,8 +178,8 @@ class RequisitosAutoraisMockitoTest {
         @Test
         @DisplayName("RA-2: golpe elétrico é super efetivo contra Água e pouco efetivo contra Planta (gerador mockado)")
         void testRA2_GolpeEletricoVantagemElemental() {
-            when(geradorInt.gerarInt()).thenReturn(50);        // sempre acerta
-            when(geradorDouble.gerarDouble()).thenReturn(0.5); // nunca crítico
+            when(geradorInt.gerarInt()).thenReturn(50);
+            when(geradorDouble.gerarDouble()).thenReturn(0.5);
             Ataque choque = golpe("Choque do Trovão");
 
             int contraNormal = calcDano.calcularDano(choque, pikaSal, alvo(Tipo.NORMAL), terreno);
@@ -253,9 +231,7 @@ class RequisitosAutoraisMockitoTest {
                 @Mock RegistroBatalha registro,
                 @Mock RepositorioResultados repositorio) {
             when(servicoTerreno.gerarTerreno()).thenReturn(terreno);
-            // 0.6 -> índice (int)(0.6 * 4) = 2 = "Onda Trovão" no PikaSal; também passa na chance 1.0
             when(geradorDouble.gerarDouble()).thenReturn(0.6);
-            // o oponente (paralisado, mas 0.6 >= 0.25 -> age) derruba o PikaSal e encerra a batalha
             when(calcDanoMock.calcularDano(any(Ataque.class), any(Pokemon.class), any(Pokemon.class), any(Terreno.class)))
                     .thenReturn(1000);
 

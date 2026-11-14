@@ -12,10 +12,8 @@ import services.GeradorInteiroAleatorio;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalcDanoTest {
-
     private static final double DELTA = 0.0001;
 
-    /** Geradores determinísticos simples (sem Mockito): sempre acerta e nunca dá crítico. */
     private static CalcDano calcDanoDeterministico() {
         GeradorDoubleAleatorio semCritico = () -> 0.5;
         GeradorInteiroAleatorio sempreAcerta = new GeradorInteiroAleatorio() {

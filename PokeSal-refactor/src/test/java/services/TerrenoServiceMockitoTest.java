@@ -23,13 +23,8 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-/**
- * TerrenoService com o relógio (java.time.Clock) mockado: o teste controla se é dia ou noite.
- * Não mockados: Clima (enum) e as factories/terrenos (objetos de valor).
- */
 @ExtendWith(MockitoExtension.class)
 class TerrenoServiceMockitoTest {
-
     private static final Instant MEIO_DIA = Instant.parse("2026-11-14T12:00:00Z");
     private static final Instant MEIA_NOITE = Instant.parse("2026-11-14T00:00:00Z");
 
@@ -44,7 +39,6 @@ class TerrenoServiceMockitoTest {
     @Test
     @DisplayName("Asfalto Quente só é ativado durante o dia (clima SOL)")
     void testAsfaltoQuenteApenasDuranteODia() {
-        // retornos em sequência: 1ª chamada = meio-dia, 2ª chamada = meia-noite
         when(clock.instant()).thenReturn(MEIO_DIA, MEIA_NOITE);
         TerrenoService servico = new TerrenoService(Clima.SOL, clock);
 

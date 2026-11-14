@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class TerrenoTest {
-
     private static final double DELTA = 0.0001;
 
     @Test
@@ -30,7 +29,7 @@ class TerrenoTest {
     @DisplayName("canteiro cura 5% do HP máximo de PokéSal tipo Planta (bug do 10% corrigido na refatoração)")
     void testEfeitoTerrenoEstacionamentoUCSal_curaCanteiroSoAfetaTipoPlanta() {
         Pokemon plantaFerida = new Pokemon("BulbaSal", Tipo.PLANTA, 100, 49, 49, 45);
-        plantaFerida.receberDano(80); // HP 20
+        plantaFerida.receberDano(80);
 
         new Canteiro().curaTerreno(plantaFerida);
 
@@ -52,7 +51,7 @@ class TerrenoTest {
     @DisplayName("cura do canteiro não ultrapassa o HP máximo")
     void testEfeitoTerrenoEstacionamentoUCSal_curaNaoUltrapassaHpMax() {
         Pokemon plantaQuaseCheia = new Pokemon("ChikoSal", Tipo.PLANTA, 100, 49, 65, 45);
-        plantaQuaseCheia.receberDano(2); // HP 98
+        plantaQuaseCheia.receberDano(2);
 
         new Canteiro().curaTerreno(plantaQuaseCheia);
 

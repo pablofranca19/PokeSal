@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GerarTreinador.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">GerarTreinador.java</span></div><h1>GerarTreinador.java</h1><pre class="source lang-java linenums">package utils;
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GerarTreinador.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">utils</a> &gt; <span class="el_source">GerarTreinador.java</span></div><h1>GerarTreinador.java</h1><pre class="source lang-java linenums">package utils;
 
 import models.Pokemon;
 import models.Treinador;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GerarTreinador {
-<span class="nc" id="L11">    private static final List&lt;String&gt; NOMES_TREINADORES = List.of(</span>
+<span class="fc" id="L11">    private static final List&lt;String&gt; NOMES_TREINADORES = List.of(</span>
             &quot;Osvaldo&quot;, &quot;Sheila&quot;, &quot;Cléber&quot;, &quot;Mario&quot;, &quot;Odete&quot;, &quot;Marcos&quot;,
             &quot;Everton&quot;, &quot;Cristianne&quot;, &quot;Patrícia&quot;, &quot;Fernando&quot;
     );
@@ -17,22 +17,22 @@ public class GerarTreinador {
     private final GerarInicial gerarInicial;
     private final List&lt;String&gt; nomesDisponiveis;
 
-<span class="nc" id="L20">    public GerarTreinador(GeradorInteiroAleatorio geradorInteiro, GerarInicial gerarInicial) {</span>
-<span class="nc" id="L21">        this.geradorInteiro = geradorInteiro;</span>
-<span class="nc" id="L22">        this.gerarInicial = gerarInicial;</span>
-<span class="nc" id="L23">        this.nomesDisponiveis = new ArrayList&lt;&gt;(NOMES_TREINADORES);</span>
-<span class="nc" id="L24">    }</span>
+<span class="fc" id="L20">    public GerarTreinador(GeradorInteiroAleatorio geradorInteiro, GerarInicial gerarInicial) {</span>
+<span class="fc" id="L21">        this.geradorInteiro = geradorInteiro;</span>
+<span class="fc" id="L22">        this.gerarInicial = gerarInicial;</span>
+<span class="fc" id="L23">        this.nomesDisponiveis = new ArrayList&lt;&gt;(NOMES_TREINADORES);</span>
+<span class="fc" id="L24">    }</span>
 
     public Treinador gerar(Mochila mochila) {
-<span class="nc bnc" id="L27" title="All 2 branches missed.">        if (nomesDisponiveis.isEmpty()) {</span>
-<span class="nc" id="L28">            throw new IllegalStateException(&quot;Não há mais nomes de treinadores disponíveis.&quot;);</span>
+<span class="fc bfc" id="L27" title="All 2 branches covered.">        if (nomesDisponiveis.isEmpty()) {</span>
+<span class="fc" id="L28">            throw new IllegalStateException(&quot;Não há mais nomes de treinadores disponíveis.&quot;);</span>
         }
 
-<span class="nc" id="L31">        int indice = geradorInteiro.gerarInt(nomesDisponiveis.size());</span>
-<span class="nc" id="L32">        String nomeSorteado = nomesDisponiveis.remove(indice);</span>
-<span class="nc" id="L33">        Pokemon pokemon = gerarInicial.gerar();</span>
+<span class="fc" id="L31">        int indice = geradorInteiro.gerarInt(nomesDisponiveis.size());</span>
+<span class="fc" id="L32">        String nomeSorteado = nomesDisponiveis.remove(indice);</span>
+<span class="fc" id="L33">        Pokemon pokemon = gerarInicial.gerar();</span>
 
-<span class="nc" id="L35">        return new Treinador(nomeSorteado, mochila, List.of(pokemon), false);</span>
+<span class="fc" id="L35">        return new Treinador(nomeSorteado, mochila, List.of(pokemon), false);</span>
     }
 }
-</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
