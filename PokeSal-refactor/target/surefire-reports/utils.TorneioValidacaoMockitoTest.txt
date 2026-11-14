@@ -1,8 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: utils.TorneioValidacaoMockitoTest
 -------------------------------------------------------------------------------
-<<<<<<<< HEAD:PokeSal-refactor/target/surefire-reports/utils.TorneioValidacaoMockitoTest.txt
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.096 s -- in utils.TorneioValidacaoMockitoTest
-========
-Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.432 s -- in models.RequisitosAutoraisTest
->>>>>>>> 9996b96703db1d6f5ddb535a9a6a2243fcf265fd:PokeSal-refactor/target/surefire-reports/models.RequisitosAutoraisTest.txt
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.104 s -- in utils.TorneioValidacaoMockitoTest
