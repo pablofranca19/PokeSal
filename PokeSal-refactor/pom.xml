@@ -43,6 +43,11 @@
             <version>3.25.3</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.sonarsource.scanner.maven</groupId>
+            <artifactId>sonar-maven-plugin</artifactId>
+            <version>5.8.0.7211</version>
+        </dependency>
     </dependencies>
 
     <build>
