@@ -1,708 +1,258 @@
-# Uso de inteligência artificial
-
-Como previsto pela documentação do projeto, para quaisquer utilização de IA, deve-se colocar neste arquivo o txt do prompt.
-
-## Prompts utilizados
-
-### Prompt 1
-
-- Formate este documento PDF e transforme-o em markdown. Além disso, estilize-o, sem alterar o conteúdo presente nele, para melhor visualização.
-
-### Prompt 2
-
-- Faça uma documentação das regras de negócio do projeto, e como rodar ele pelo terminal.
-
-```
-===============================================================================
-```
-
-`1. mostre os erros de sintaxe e compilação que tem` 
+# Registro de prompts — PokeSal, Fase 03 (refatoração)
 
-```
-2. vamos consertar isso aqui, passo a passo
-```
+- **Ferramenta:** Claude (Anthropic), pelo chat do claude.ai
+- **Escopo deste arquivo:** apenas esta conversa. Prompts de outros chats não estão aqui e precisam ser acrescentados à mão.
+- **Como foi gerado:** transcrição das mensagens do usuário, na ordem em que foram enviadas. Conferir contra o histórico real antes de entregar.
+- **Convenção:** o texto digitado pelo usuário está em citação, copiado como foi escrito. Entre colchetes, `[colado: ...]` descreve código ou documento colado, e `[anexo: ...]` descreve arquivo enviado.
 
-```
-[código colado: classe Batalha]
-```
+## Resumo por tipo de pedido
 
-```
-3. quero adicionar os items e os efeitos deles
-```
+| Tipo | Quantidade nesta conversa |
+| --- | --- |
+| Correção ortográfica de texto de documentação | **0** |
+| Identificação de erros de sintaxe apontados pelo compilador | **0** (nenhuma saída de compilador foi enviada) |
+| Planejamento e ordem do trabalho | vários (ex.: 1, 2, 11, 19, 27, 28, 31, 50) |
+| Dúvidas conceituais (getClass, toString, record, sorteios, constantes) | vários (ex.: 8, 12, 16, 17, 18, 42) |
+| Revisão de código escrito pelo usuário | maioria (ex.: 5 a 7, 9, 13 a 15, 23 a 26, 29, 33 a 49, 52, 53) |
+| Decisões de design e aderência ao diagrama de classes | vários (ex.: 4, 21, 27, 28, 31) |
 
-```
-4. em questões de lógica DE PROGRAMAÇÃO APENAS, como eu faria tipo:
-hp max = 40
-hp atual = 15
-se usar poção: hp atual = 35 (curou em 20)
-...
-```
-
-```
-hp max = 40
-hp atual = 35
-se usar poção: hp atual = 40 (curou em 5)
-```
-
-```
-5. [código colado: Pocao.java]
-dessa forma, então
-```
-
-```
-6. existe outra forma de fazer isso? pois o Inicial não tem um set pra hpAtual,
-somente um construtor que determina que o atual (quando começar a batalha) deve
-ser igual ao hp máximo
-```
-
-```
-7. deixei assim mesmo:
-[código colado: Pocao.java e Inicial.java]
-agora o seguinte: como não dá para usar itens em pokémons saudáveis, eu preciso
-que o jogador receba uma mensagem caso ele tente
-```
-
-```
-8. isso eu sei, porém, no fluxo de batalha (que não está terminado), o jogador
-ainda poderia mudar a função no turno dele, ou ele acabaria perdendo?
-```
-
-```
-[código colado: Batalha.java]
-```
-
-```
-9. eu quero que ele não perca o turno, mas deixa pra lá isso por enquanto.
-estou com dúvidas sobre como implementar essa parte aqui na parte dos itens:
-[código colado: Mochila.java]
-```
-
-```
-10. todas essas xd. porém tirei a parte de remover o item, não faz sentido
-```
-
-```
-11. estava fazendo as outras classes de itens, porém todos os anti- são iguais,
-eles só vão remover certo status do pokemon
-```
-
-```
-12. criando uma classe comum para todos os anti-, onde eu crio os itens?
-```
-
-```
-13. o método adicionar itens tem algo de errado
-```
-
-```
-[código colado: Mochila.java]
-```
-
-```
-14. [imagem anexada]
-```
-
-```
-15. [imagem anexada] como eu deixo isso mais prático?
-```
+## Natureza da ajuda recebida (resumo)
 
-```
-16. sim
-```
+- Na **primeira resposta**, a IA escreveu duas versões completas da classe `TerrenoService`.
+- A partir da mensagem 2, a pedido do usuário ("nao me de o codigo feito, me ajude a escreve-lo"), a IA passou a orientar em passos, com exemplos em outros domínios (Cachorro, Biblioteca, lista de cores), sem entregar o código final do projeto. Mesmo assim, em vários passos indicou nomes de métodos e recursos da linguagem a usar (por exemplo `getSimpleName()`, `List.copyOf`, `Math.max`).
+- A IA revisou o código escrito pelo usuário e apontou bugs, entre eles: crítico 2.0 em vez de 1.5; limite do sorteio de 1 a 100; cura do `Canteiro`; bônus de terreno aplicado a qualquer tipo; texto corrompido no golpe do `ChikoSal`; `!` invertendo a lógica de `podeAgir`; `(int)` no lugar errado no sorteio do golpe; ordem dos registros no `RegistroBatalha`.
+- A IA também listou inconsistências entre o diagrama de classes e o enunciado.
+- **Requisitos autorais:** nenhum prompt pediu criação ou concepção dos requisitos autorais. Na mensagem 1 o usuário diz que a equipe já os criou, e na mensagem 51 que o requisito "explorar o mato" já está pronto.
 
-- `[código colado: Batalha.java e Mochila.java]` 
+## Prompts em ordem
 
-```
-17. adicionei o break no final do case 2.
-```
+### 1
+> bom, ta na hora da segunda fase do projeto, aqui está o documento dizendo o que a gente tem que fazer:
 
-```
-qual vc acha que é a opção mais prática?
-```
+`[colado: enunciado da Fase 03 do professor]`
 
-```
-18. tem alguma coisa aí com o tal dos magic numbers que eu precisaria me
-atentar?
-```
+> 1. eu fiquei com a parte de refatoração do código. tenho que fazer de acordo com o novo diagrama de classes (anexo)
+> 2. os requisitos autorais já foram criados por nós: novo tipo de pokémon: elétrico. Pokémon: PikaSal; agora o player tem a opção de procurar um pokésal incial, podendo achar ele no mato alto (metaforico apenas) e ganhando um aleatório.
+> 3. por favor me ajude
 
-```
-19. por favor, nomeie todo pra mim
-```
+`[colado: classe TerrenoService]`
 
-```
-20. [código colado: CalcDano.java]
-```
+> como ficaria aqui?
+>
+> a regra é:
+> 12 am - 8 am: asfalto
+> 8 am - 16 pm: canteiro
+> 16 pm - 12 am: poca
 
-```
-21. rapidão, tem alguma coisa aí com o tal dos magic numbers que eu precisaria
-me atentar?
-```
+`[anexo: PDF do diagrama de classes]`
 
-```
-22. [código colado: CalcDano.java]
-```
+### 2
+> vamos pular essa parte por agora e vamos para a próxima.
+> eu mandei o arquivo do codigo.
+> nao me de o codigo feito, me ajude a escreve-lo.
 
-```
-eu não sei o que fazer com os outros números da fórmula, eles são apenas números
-estáticas
-```
+`[anexo: PokeSal-main.zip]`
 
-```
-23. [código colado: CalcDano.java]
-certo, sobre os magic numbers...
-```
+### 3
+> desculpa, mandei o arquivo errado, ta ai
 
-```
-24. certo, o que falta?
-```
+`[anexo: novo_PokeSal1.zip]`
 
-```
-25. sim, vamos focar nessa parte, mas apenas lembrando: na divisão do trabalho,
-a minha única função é codar, então não precisa se preocupar com outras partes e
-nem com a segunda fase
-```
+### 4
+> nao sei qual seria o melhor, acho que o terreno mesmo
 
-```
-26. então, sobre a questão da lista e de escolher os ataques, como já vem a
-lista inteira, não vai ter aquela estrutura enumerada que eu geralmente boto,
-acho que vai ficar ruim se não
-```
+### 5
+`[colado: classes ChikoSal, CharSal e SquirtSal, sem texto]`
 
-```
-27. beleza, seguinte:
-```
+### 6
+> consertei poca e asfalto. tirei os magic numbers (lembre-se disso, magic numbers, code smells e coisas parecidas precisam ser evitados!!!)
+>
+> agora canteiro fica dificil, ja que o argumento so aceita int, nao double
 
-```
-como a classe Batalha tem um método que cria as batalhas e tal, precisamos de um
-método pra chamar na classe Main. porém, ainda precisamos de um pokémon pro
-oponente, que não temos. acho que vale a tentativa de fazer um gerador aleatório
-de de Iniciais. como exatamente?
-```
+`[colado: classes Poca, Asfalto e Canteiro]`
 
-```
-28. ainda falta determinar o terreno, mas pensando nisso foi que eu bolei
-algumas ideias, por favor, me confirme se OS REQUISITOS AUTORAIS QUE EU CRIEI
-estão corretos
-```
+### 7
+`[colado: classe Canteiro]`
 
-```
-requisitos autorais pokésal:
-```
+> tá, preciso de ajuda na 3 e 4
 
-`1. chance de dano crítico - cada ataque que dá dano tem uma chance de 6.25% (1/16) de ser um ataque crítico, que causa 2x o dano normal.` 
+### 8
+> foi mal, eu nao entendi a parte do getClass(), como utilizar?
 
-`2. STAB (same type attack bonus) - um pokémon que utiliza um ataque com a mesma tipagem que ele, recebe um bônus de dano de 1.5x` 
+### 9
+`[colado: trecho de Batalha com a comparação de terrenos por getClass]`
 
-`3. movimentos settam o terreno - ataques como sunny day e rain dance criam os terrenos determinados, de acordo com a tipagem` 
+> assim?
 
-`4. buffs e debuffs - ataques que não causam dano que aumentam ou diminuem algum atributo do jogador/oponente, como growl e leer.` 
+### 10
+> primeiro, tem certeza que ta atendendo todas as exigências do sonarqube, checkstyle, etc.? é necessario que sim, então quero que vc verifique isso em todo passo.
+> segundo, como roda esse mvn compile?
 
-```
-29. aproveitei e já fiz o sistema de crítico e de STAB:
-```
+### 11
+> vamos refatorar o código primeiro, depois resolvemos isso. mantenha em mente que é necessario já refatorar com sonarqube, checkstyle, etc.
 
-- `[código colado: CalcDano.java]` 
+### 12
+> ja fiz todos, menos o numero 2, nao entendi NADA
 
-`30. não, você está correto, era isso mesmo` 
+### 13
+`[colado: classe Terreno, sem texto]`
 
-```
-agora vamos pro próximo requisito
-```
+### 14
+`[colado: GeradorService, primeira versão, sem texto]`
 
-`31. o que vc achar melhor\` 
+### 15
+`[colado: GeradorService, segunda versão, sem texto]`
 
-`32. [código colado: CalcDano.java]` 
+### 16
+> como que eu faria entao pra ir de 1 a 100 nesse caso?
 
-`33. onde eu corrijo isso daq? public enum Terreno {` 
+### 17
+> eu nao sou responsavel pelo javadoc nao po. pergunta: esse + 1 no nextInt() nao seria um magic number tbm?
 
-```
-    ASFALTO,
-    POCA,
-    CANTEIRO;
-```
+`[colado: GeradorService, CalcDano e Ataque]`
 
-```
-    public double getMod(Tipo atk){
-        if (atk == Tipo.FOGO && ASFALTO){
-```
+### 18
+> uma pergunta: por que vc utiliza essa convencao de criar uma constante apenas e comparar se o gerarDouble() é menor que ela?
 
-- `} } }` 
+### 19
+> na real, vamos deixar pra resolver os code smells pro final, agora vamos focar em fazer o código certo.
+> a coisa que eu percebi é que ainda nao temos a precisão dos ataques
 
-```
-34. minha classe terreno ficou assim:
-[código colado: Terreno.java]
-adicionei esse método novo que acho que dá certo (o int é pq não tem porcentagem
-na vida dos pokémons, são apenas números inteiros)
-```
+`[colado: classe Ataque]`
 
-`35. [imagem anexada]` 
+> precisamos consertar isso
 
-`36. [código colado: CalcDano.java]` 
+### 20
+`[colado: classe Ataque]`
 
-`37. [código colado: CalcDano.java com erro de assinatura]` 
+> nao entendi nada, sinceramente, me ajude e me explique como se eu fosse um primata, passo a passo
 
-`38. onde eu colocaria essa linha de new Ataque` 
+### 21
+`[colado: classe Ataque]`
 
-`39. já fiz [código colado: ChikoSal.java]` 
+> um negocio que eu percebi é que nao faz sentido ter buff pro alvo pq todo ataque que causa efeito pro alvo é um nerf
 
-```
-pegue o ChikoSal como exemplo
-```
+### 22
+> ja resolvi todos. pra sua informação, sou fascinado em pokémon
 
-```
-40. vamos recapitular para eu anotar aqui:
-quais foram os requisitos autorais que eu criei até agora?
-```
+### 23
+`[colado: classe CalcDano]`
 
-```
-41. beleza, seguinte:
-```
+> fiquei empacado
 
-```
-como a classe Batalha tem um método que cria as batalhas e tal, precisamos de um
-método pra chamar na classe Main. porém, ainda precisamos de um pokémon pro
-oponente, que não temos. acho que vale a tentativa de fazer um gerador aleatório
-de de Iniciais. como exatamente?
-```
+### 24
+`[colado: classe CalcDano, sem texto]`
 
-```
-42. ainda falta determinar o terreno, mas pensando nisso foi que eu bolei
-algumas ideias, por favor, me confirme se OS REQUISITOS AUTORAIS QUE EU CRIEI
-estão corretos
-```
+### 25
+`[colado: classe CalcDano, sem texto]`
 
-```
-[repetição do prompt 28]
-```
+### 26
+`[colado: classe CalcDano]`
 
-```
-43. já consertei a parte do índice, porém sobre a o método curar, ao invés dessa
-conta maluca aí, não poderia ser:
-public void curar(int quant){
-```
+> ps: gostei da piadinha kkkkk
 
-```
-        int quantCura = Math.min(this.hpAtual + quant, hpMax);
-```
+### 27
+> uma outra coisa, bem grande na real.
+> eu PRECISO seguir o diagrama de classes, não posso apenas inventar e botar no codigo. me ajude, mas seguindo o diagrama
 
-```
-        this.hpAtual = quantCura;
-```
+### 28
+> vamos fazer o seguinte:
+> já falei com o cara que fez o diagrama, vou tentar resolver as inconsistências com ele, mas, por enquanto, vamos tentar refatorar o QUE PODE ser refatorado, seguindo o diagrama e sem contradizer nada
 
-```
-        IO.println(nome + " recuperou " + quantCura + "HP!");
-    }
-```
+### 29
+`[colado: PokemonAbstractFactory e BulbaSalFactory]`
 
-```
-44. realmente, consertei e ainda botei pra mostrar o hp atual do bixo depois
-próximo passo
-```
+> deveria ficar assim né?
 
-# `45. sim` 
+### 30
+> feito, próximo
 
-```
-lembrando que o efeito de paralisia só conta pra ataques, como é o treinador que
-comanda o pokémon, ele pode escolher atacar ou usar um item a vontade, sem ficar
-paralisado
-```
+### 31
+> ok, falei com o cara e ele concordou comigo e disse que posso mudar as coisas necessarias para o melhor funcionamento do código e que ele só mudará o diagrama depois.
+> passe cada uma das mudanças necessarias até agora
 
-# `46. certo:` 
+### 32
+> vamos com calma, a partir do numero 2 que foi onde eu empaquei
 
-```
-1. quantidades exatas:
-```
+### 33
+`[colado: classe Pokemon, sem texto]`
 
-`1. paralisia reduz a velocidade do pokémon pela metade e tem 25% de chance de impedir o pokémon de atacar` 
+### 34
+> próximo item
 
-`2. queimadura reduz o ataque em 50% e dá 1/16 da vida total de dano no pokémon afetado` 
+### 35
+`[colado: classe Ataque, sem texto]`
 
-`3. envenenado dá 1/8 da vida total de dano no pokémon afetado` 
+### 36
+> proximo
 
-`2. os efeitos de status são permanentes até serem removidos com itens` 
+### 37
+`[colado: classe Treinador, sem texto]`
 
-`3. as reduções de atributos e chances de sofrer algo são EXCLUSIVAMENTE para os status ativos, ou seja, caso sejam curados, o pokémon volta a estaca zero` 
+### 38
+> vamos começar
 
-`47. [código colado: Inicial.java]` 
+### 39
+`[colado: classe RegistroBatalha, sem texto]`
 
-`48. revise, depois vamos integrar` 
+### 40
+> certo, próximo ponto
 
-# `49. sim` 
+### 41
+`[colado: RegistroBatalha, ResultadoBatalha e RepositorioResultados, sem texto]`
 
-```
-lembrando que o efeito de paralisia só conta pra ataques, como é o treinador que
-comanda o pokémon, ele pode escolher atacar ou usar um item a vontade, sem ficar
-paralisado
-```
+### 42
+> como fazer uma classe record?
 
-`50. [código colado: Batalha.java]` 
+### 43
+`[colado: ResultadoBatalha como record]`
 
-`51. antes de aplicar a cura do terreno, reveja isso:` 
+> agora, nao sei como consertar RepositorioResultados
 
-`52. tirei a chave, fora isso, tem mais alguma coisa?` 
+### 44
+`[colado: ResultadoBatalha e RepositorioResultados, sem texto]`
 
-```
-53. vamos seguir, mas só um adendo: é pq nos jogos de pokémon acontece algo
-muito frustrante que é: ele deixa você escolher atacar, escolher o ataque e SÓ
-depois ele falar que o pokémon esta paralisado, como se ele Tivesse ativamente
-tentando te obedecer, mas não consegue por causa da paralisia, entendeu?
-```
+### 45
+`[colado: ResultadoBatalha com construtor compacto]`
 
-`54. sim` 
+> me diga algo, qual vc acha que está o nosso progresso, em porcentagem. considerando que seria ate o fim da minha parte
 
-`55. [código colado: Batalha.java]` 
+### 46
+`[colado: classe Batalha, sem texto]`
 
-# `56. beleza,` 
+### 47
+`[colado: campos e construtor da Batalha, sem texto]`
 
-```
-como a classe Batalha tem um método que cria as batalhas e tal, precisamos de um
-método pra chamar na classe Main. porém, ainda precisamos de um pokémon pro
-oponente, que não temos. acho que vale a tentativa de fazer um gerador aleatório
-de de Iniciais. como exatamente?
-```
+### 48
+`[colado: classe Batalha]`
 
-`57. quero por a lógica de não perder o turno` 
+> empaquei na 3 acho
 
-`58. calma, a parte dos ataques ainda não está completa` 
+### 49
+`[colado: trecho do sorteio do golpe do oponente, sem texto]`
 
-`59. então, já tá tudo basicamente definido:` 
+### 50
+> podemos seguir, mas antes quero te informar de algo:
+> há outro requisito funcional a ser implementado: a possibilidade de "explorar o mato" e receber um pokémon aleatorio. vc acha que a gente deveria focar em refatorar o código agora e implementar isso depois ou vice-versa?
 
-```
-1. são os ataques que causam o dano super efetivo ou não, não os pokémons em si
-2. os efeitos de terreno não estão declarados ainda, porém irão influenciar no
-desempenho do ataque
-```
+### 51
+> certo, o requisito já tá pronto, não preciso de nada seu além da ajuda.
+> próximo
 
-```
-3. os ataques seguem uma fórmula específica que parece que deixa meio balanceado
-[dano =(((2×Level+10)/250) × (Attack/Defense) × BasePower+2) x Modifier]
-(modifier, nesse caso, sendo o terreno caso haja)
-```
+### 52
+> tentei inserir já os registradores
 
-```
-60. não pensei aonde botar ainda, queria que você me ajudasse nessa
-quanto ao nível, estabeleci que todos serão do nível 5, já que esse é o nível
-que os iniciais começam nos jogos
-```
+`[colado: trechos de Batalha com as chamadas ao RegistroBatalha]`
 
-`61. pode ser a opção B mesmo` 
+### 53
+`[colado: métodos executarAtaque, executarTurnoJogador e executarTurnoOponente, sem texto]`
 
-`62. 1. não sei xd` 
+### 54
+> gere um arquivo markdown que armazena todos os meus prompts de correção ortográfica de documentação de texto e identificação de erros sintáticos apontados pelo compilador.
 
-`2. acho melhor deixar o método terreno cuidando de tudo mesmo` 
+## Pendências antes de entregar
 
-`63. deixe eu ver o mapa` 
-
-`64. como eu corrijo isso daq?` 
-
-```
-[código colado: Terreno.java com erro]
-```
-
-```
-65. minha classe terreno ficou assim:
-```
-
-```
-[código colado: Terreno.java]
-```
-
-```
-adicionei esse método novo que acho que dá certo (o int é pq não tem porcentagem
-na vida dos pokémons, são apenas números inteiros)
-```
-
-```
-66. [imagem anexada]
-```
-
-```
-67. [imagem anexada]
-```
-
-```
-68. onde era pra deixar a matriz de vantagem mesmo?
-```
-
-```
-69. rapidão, tem alguma coisa aí com o tal dos magic numbers que eu precisaria
-me atentar?
-```
-
-```
-70. por favor, nomeie todo pra mim
-```
-
-```
-71. [código colado: CalcDano.java]
-```
-
-```
-72. eu não sei o que fazer com os outros números da fórmula, eles são apenas
-números estáticas
-```
-
-```
-73. [código colado: CalcDano.java]
-certo, sobre os magic numbers...
-```
-
-```
-74. eu mudei a assinatura, está correto sem nenhum erro de compilação ou
-sintaxe, porém sobre os magic numbers...
-```
-
-```
-eu não sei o que fazer com os outros números da fórmula, eles são apenas números
-estáticas
-```
-
-```
-75. [código colado: CalcDano.java]
-```
-
-```
-76. o que falta?
-```
-
-```
-77. sim, vamos focar nessa parte, mas apenas lembrando: na divisão do trabalho,
-a minha única função é codar, então não precisa se preocupar com outras partes e
-nem com a segunda fase
-```
-
-```
-78. então, sobre a questão da lista e de escolher os ataques, como já vem a
-lista inteira, não vai ter aquela estrutura enumerada que eu geralmente boto,
-acho que vai ficar ruim se não
-```
-
-```
-79. vamos recapitular para eu anotar aqui:
-quais foram os requisitos autorais que eu criei até agora?
-```
-
-```
-80. beleza!
-```
-
-```
-81. aproveitei e já fiz o sistema de crítico e de STAB:
-[código colado: CalcDano.java]
-```
-
-```
-82. não, você está correto, era isso mesmo
-```
-
-```
-agora vamos pro próximo requisito
-```
-
-```
-83. o que vc achar melhor\
-```
-
-```
-84. [código colado: CalcDano.java]
-```
-
-```
-85. onde eu corrijo isso daq?
-```
-
-```
-[código colado: Terreno.java com erro]
-```
-
-```
-86. minha classe terreno ficou assim:
-```
-
-```
-[código colado: Terreno.java com curaTerreno]
-```
-
-```
-87. [imagem anexada]
-```
-
-`88. [imagem anexada]` 
-
-`89. onde era pra deixar a matriz de vantagem mesmo?` 
-
-```
-90. já fiz
-[código colado: ChikoSal.java]
-```
-
-```
-pegue o ChikoSal como exemplo
-```
-
-```
-91. certo, seguinte:
-como eu deixo isso mais prático?
-```
-
-```
-92. sim
-[código colado: Batalha.java]
-```
-
-```
-93. adicionei o break no final do case 2.
-qual vc acha que é a opção mais prática?
-```
-
-```
-94. nos dois
-```
-
-```
-95. [código colado: Batalha.java]
-```
-
-```
-96. quero por a lógica de não perder o turno
-```
-
-```
-97. calma, a parte dos ataques ainda não está completa
-```
-
-```
-98. então, já tá tudo basicamente definido:
-[repetição do prompt 59, fórmula de dano]
-```
-
-```
-99. não pensei aonde botar ainda, queria que você me ajudasse nessa
-quanto ao nível, estabeleci que todos serão do nível 5, já que esse é o nível
-que os iniciais começam nos jogos
-```
-
-```
-100. pode ser a opção B mesmo
-```
-
-```
-101. 1. não sei xd
-```
-
-```
-2. acho melhor deixar o método terreno cuidando de tudo mesmo
-```
-
-```
-102. deixe eu ver o mapa
-```
-
-```
-103. como eu corrijo isso daq?
-[código colado: Terreno.java com erro]
-```
-
-```
-104. minha classe terreno ficou assim:
-[código colado: Terreno.java]
-```
-
-```
-105. aproveitei e já fiz o sistema de crítico e de STAB:
-[código colado: CalcDano.java]
-```
-
-```
-106. eu quero que ele não perca o turno, mas deixa pra lá isso por enquanto.
-[repetição do prompt 9]
-```
-
-```
-107. sim, seguinte: eu já fiz os itens de cura de status, como eu adiciono eles
-na mochila?
-```
-
-```
-108. tem algo errado
-```
-
-```
-[imagem anexada]
-```
-
-```
-109. [imagem anexada] como eu deixo isso mais prático?
-```
-
-```
-110. sim
-[código colado: Batalha.java completo]
-```
-
-```
-111. antes de aplicar a cura do terreno, reveja isso:
-[código colado: Batalha.java]
-```
-
-```
-112. tirei a chave, fora isso, tem mais alguma coisa?
-```
-
-```
-113. vamos seguir, mas só um adendo: é pq nos jogos de pokémon...
-[repetição do prompt 53]
-```
-
-```
-114. sim
-```
-
-```
-115. [código colado: Batalha.java]
-```
-
-```
-116. ok, próximo
-```
-
-```
-117. faz sentido sim, só um ponto:
-no else if (opAtk == opSair), é meio redundante trocar turnoUsado pra false,
-não? já que até lá, ele sempre vai continuar sendo falso
-```
-
-```
-118. botar um break aí não ajudaria?
-```
-
-```
-119. ok, próximo
-```
-
-```
-120. beleza, agora vamos pro turno do oponente propriamente dito...
-sim
-```
-
-```
-121. mas e os textos, a lista de ataques que estao no case 1?
-```
-
-```
-122. faz sim, só um ponto:
-```
-
-```
-no else if (opAtk == opSair), é meio redundante trocar turnoUsado pra false,
-não? já que até lá, ele sempre vai continuar sendo falso
-```
-
-```
-===============================================================================
-```
-
-```
-FIM DO REGISTRO
-```
-
+- Acrescentar os prompts de **outros chats** usados no projeto, se houver.
+- Conferir a lista contra o histórico real da conversa.
+- Preencher a data de cada uso e a versão do modelo, se o professor exigir.
+- Manter o `AI_DECLARATION.md` coerente com este registro.
