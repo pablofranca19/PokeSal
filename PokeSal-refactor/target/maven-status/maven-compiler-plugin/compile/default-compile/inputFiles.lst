@@ -1,21 +1,51 @@
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/application/Main.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/Inicial.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/enums/EfeitoStatus.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/enums/Terreno.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/enums/Tipo.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/pokesal/BulbaSal.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/pokesal/CharSal.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/pokesal/ChikoSal.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/pokesal/CyndaSal.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/pokesal/SquirtSal.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/models/pokesal/TotoSal.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/Ataque.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/Batalha.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/Buff.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/CalcDano.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/CuraStatus.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/GerarInicial.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/GerarTerreno.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/Item.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/Mochila.java
-/home/pablofranca/Documents/Universidade/4o semestre/Testes e Qualidade de Software/PokeSal/PokeSal-refactor/src/main/java/utils/Pocao.java
+C:\PokeSal-refactor\src\main\java\utils\RegistroBatalhaMemoria.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\CharSal.java
+C:\PokeSal-refactor\src\main\java\utils\RegistroBatalha.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\ChikoSalFactory.java
+C:\PokeSal-refactor\src\main\java\models\enums\EfeitoStatus.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\CyndaSal.java
+C:\PokeSal-refactor\src\main\java\utils\Buff.java
+C:\PokeSal-refactor\src\main\java\models\enums\Clima.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\PokemonAbstractFactory.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\SquirtSal.java
+C:\PokeSal-refactor\src\main\java\models\terrains\terrainFactories\PocaFactory.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\PikaSal.java
+C:\PokeSal-refactor\src\main\java\utils\RepositorioResultadosMemoria.java
+C:\PokeSal-refactor\src\main\java\utils\ResultadoBatalha.java
+C:\PokeSal-refactor\src\main\java\models\Pokemon.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\CharSalFactory.java
+C:\PokeSal-refactor\src\main\java\utils\Torneio.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\BulbaSal.java
+C:\PokeSal-refactor\src\main\java\services\GeradorInteiroAleatorio.java
+C:\PokeSal-refactor\src\main\java\utils\Batalha.java
+C:\PokeSal-refactor\src\main\java\utils\Ataque.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\TotoSalFactory.java
+C:\PokeSal-refactor\src\main\java\models\terrains\terrainFactories\AsfaltoFactory.java
+C:\PokeSal-refactor\src\main\java\services\GeradorService.java
+C:\PokeSal-refactor\src\main\java\models\terrains\Poca.java
+C:\PokeSal-refactor\src\main\java\utils\ExecutorBatalha.java
+C:\PokeSal-refactor\src\main\java\models\terrains\terrainFactories\CanteiroFactory.java
+C:\PokeSal-refactor\src\main\java\utils\GerarInicial.java
+C:\PokeSal-refactor\src\main\java\models\terrains\Asfalto.java
+C:\PokeSal-refactor\src\main\java\models\terrains\Canteiro.java
+C:\PokeSal-refactor\src\main\java\utils\CalcDano.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\SquirtSalFactory.java
+C:\PokeSal-refactor\src\main\java\models\enums\Tipo.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\BulbaSalFactory.java
+C:\PokeSal-refactor\src\main\java\services\TerrenoService.java
+C:\PokeSal-refactor\src\main\java\application\Main.java
+C:\PokeSal-refactor\src\main\java\utils\Item.java
+C:\PokeSal-refactor\src\main\java\utils\GerarTreinador.java
+C:\PokeSal-refactor\src\main\java\utils\Mochila.java
+C:\PokeSal-refactor\src\main\java\services\GeradorDoubleAleatorio.java
+C:\PokeSal-refactor\src\main\java\utils\CuraStatus.java
+C:\PokeSal-refactor\src\main\java\services\ServicoTerreno.java
+C:\PokeSal-refactor\src\main\java\models\Treinador.java
+C:\PokeSal-refactor\src\main\java\models\terrains\Terreno.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\PikaSalFactory.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\TotoSal.java
+C:\PokeSal-refactor\src\main\java\models\terrains\terrainFactories\TerrenoAbstractFactory.java
+C:\PokeSal-refactor\src\main\java\utils\Pocao.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\pokesalFactories\CyndaSalFactory.java
+C:\PokeSal-refactor\src\main\java\models\pokesal\ChikoSal.java
+C:\PokeSal-refactor\src\main\java\utils\RepositorioResultados.java

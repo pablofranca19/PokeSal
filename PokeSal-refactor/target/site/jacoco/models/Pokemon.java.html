@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pokemon.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">pokesal</a> &gt; <a href="index.source.html" class="el_package">models</a> &gt; <span class="el_source">Pokemon.java</span></div><h1>Pokemon.java</h1><pre class="source lang-java linenums">package models;
+
+import models.enums.EfeitoStatus;
+import models.enums.Tipo;
+import services.GeradorDoubleAleatorio;
+import utils.Ataque;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Pokemon {
+    protected String nome;
+    protected Tipo tipo;
+    protected int hpMax;
+    protected int hpAtual;
+    protected int atk;
+    protected int def;
+    protected int spd;
+    protected int estagioAtk;
+    protected int estagioDef;
+    protected int estagioSpd;
+<span class="fc" id="L23">    protected EfeitoStatus status = EfeitoStatus.NENHUM;</span>
+    protected List&lt;Ataque&gt; golpes;
+
+<span class="fc" id="L26">    public Pokemon(String nome, Tipo tipo, int hpMax, int atk, int def, int spd){</span>
+<span class="fc" id="L27">        this.nome = nome;</span>
+<span class="fc" id="L28">        this.tipo = tipo;</span>
+<span class="fc" id="L29">        this.hpMax = hpMax;</span>
+<span class="fc" id="L30">        this.hpAtual = hpMax;</span>
+<span class="fc" id="L31">        this.atk = atk;</span>
+<span class="fc" id="L32">        this.def = def;</span>
+<span class="fc" id="L33">        this.spd = spd;</span>
+<span class="fc" id="L34">        this.estagioAtk = 0;</span>
+<span class="fc" id="L35">        this.estagioDef = 0;</span>
+<span class="fc" id="L36">        this.estagioSpd = 0;</span>
+<span class="fc" id="L37">        this.golpes = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L38">    }</span>
+
+    public void setStatus(EfeitoStatus status){
+<span class="fc" id="L41">        this.status = status;</span>
+<span class="fc" id="L42">    }</span>
+
+    public void setHpAtual(int hpAtual){
+<span class="fc" id="L45">        this.hpAtual = hpAtual;</span>
+<span class="fc" id="L46">    }</span>
+
+    private static final double DIVISOR_ESTAGIO = 2.0;
+
+    private double calcMultEstagio(int estagio){
+<span class="fc bfc" id="L51" title="All 2 branches covered.">        if (estagio &gt;= 0){</span>
+<span class="fc" id="L52">            return (DIVISOR_ESTAGIO + estagio) / DIVISOR_ESTAGIO;</span>
+        } else {
+<span class="fc" id="L54">            return DIVISOR_ESTAGIO / (DIVISOR_ESTAGIO - estagio);</span>
+        }
+    }
+
+    public List&lt;Ataque&gt; getGolpes(){
+<span class="fc" id="L59">        return Collections.unmodifiableList(golpes);</span>
+    }
+
+    public EfeitoStatus getStatus(){
+<span class="fc" id="L63">        return status;</span>
+    }
+
+    public String getNome(){
+<span class="fc" id="L67">        return nome;</span>
+    }
+
+    public Tipo getTipo(){
+<span class="fc" id="L71">        return tipo;</span>
+    }
+
+    public int getHpAtual(){
+<span class="fc" id="L75">        return hpAtual;</span>
+    }
+
+    public int getHpMax(){
+<span class="fc" id="L79">        return hpMax;</span>
+    }
+
+    public int getAtk(){
+<span class="fc" id="L83">        double base = atk;</span>
+<span class="pc bpc" id="L84" title="1 of 2 branches missed.">        if (status == EfeitoStatus.QUEIMADO){</span>
+<span class="nc" id="L85">            base = base / 2;</span>
+        }
+<span class="fc" id="L87">        base *= calcMultEstagio(estagioAtk);</span>
+<span class="fc" id="L88">        return (int) base;</span>
+    }
+
+    public int getDef(){
+<span class="fc" id="L92">        double base = def;</span>
+<span class="fc" id="L93">        base *= calcMultEstagio(estagioDef);</span>
+<span class="fc" id="L94">        return (int) base;</span>
+    }
+
+    public int getSpd(){
+<span class="fc" id="L98">        double base = spd;</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (status == EfeitoStatus.PARALISADO){</span>
+<span class="fc" id="L100">            base = base / 2;</span>
+        }
+<span class="fc" id="L102">        base *= calcMultEstagio(estagioSpd);</span>
+<span class="fc" id="L103">        return (int) base;</span>
+    }
+
+    public int getEstagioAtk(){
+<span class="fc" id="L107">        return estagioAtk;</span>
+    }
+
+    public int getEstagioDef(){
+<span class="fc" id="L111">        return estagioDef;</span>
+    }
+
+    public int getEstagioSpd(){
+<span class="fc" id="L115">        return estagioSpd;</span>
+    }
+
+    public void curar(int quant){
+<span class="fc" id="L119">        int hpAntes = this.hpAtual;</span>
+<span class="fc" id="L120">        this.hpAtual = Math.min(this.hpAtual + quant, hpMax);</span>
+<span class="fc" id="L121">        int curado = this.hpAtual - hpAntes;</span>
+<span class="fc" id="L122">        System.out.println(nome + &quot; recuperou &quot; + curado + &quot;HP! (HP atual: &quot; + this.hpAtual + &quot;)&quot;);</span>
+<span class="fc" id="L123">    }</span>
+
+    private static final int ESTAGIO_MIN = -6;
+    private static final int ESTAGIO_MAX = 6;
+
+    public void alterarAtk(int quant){
+<span class="fc" id="L129">        this.estagioAtk = Math.clamp(this.estagioAtk + quant, ESTAGIO_MIN, ESTAGIO_MAX);</span>
+<span class="fc" id="L130">    }</span>
+
+    public void alterarDef(int quant){
+<span class="fc" id="L133">        this.estagioDef = Math.clamp(this.estagioDef + quant, ESTAGIO_MIN, ESTAGIO_MAX);</span>
+<span class="fc" id="L134">    }</span>
+
+    public void alterarSpd(int quant){
+<span class="fc" id="L137">        this.estagioSpd = Math.clamp(this.estagioSpd + quant, ESTAGIO_MIN, ESTAGIO_MAX);</span>
+<span class="fc" id="L138">    }</span>
+
+    public void curarStatus(){
+<span class="nc" id="L141">        this.status = EfeitoStatus.NENHUM;</span>
+<span class="nc" id="L142">        System.out.println(nome + &quot; ficou saudável!&quot;);</span>
+<span class="nc" id="L143">    }</span>
+
+    public void receberDano(int dano){
+<span class="fc" id="L146">        this.hpAtual -= dano;</span>
+<span class="fc bfc" id="L147" title="All 2 branches covered.">        if (this.hpAtual &lt;= 0){</span>
+<span class="fc" id="L148">            this.hpAtual = 0;</span>
+        }
+<span class="fc" id="L150">    }</span>
+
+    private static final int DIVISOR_DANO_QUEIMADURA = 16;
+    private static final int DIVISOR_DANO_VENENO = 8;
+
+    public void aplicarDanoStatus(){
+<span class="fc bfc" id="L156" title="All 2 branches covered.">        if (status == EfeitoStatus.QUEIMADO){</span>
+<span class="fc" id="L157">            this.hpAtual = Math.max(hpAtual - hpMax/DIVISOR_DANO_QUEIMADURA, 0);</span>
+        }
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (status == EfeitoStatus.ENVENENADO){</span>
+<span class="nc" id="L160">            this.hpAtual = Math.max(hpAtual - hpMax/DIVISOR_DANO_VENENO, 0);</span>
+        }
+<span class="fc" id="L162">    }</span>
+
+    private static final double CHANCE_PARALISIA = 0.25;
+
+    public boolean podeAgir(GeradorDoubleAleatorio geradorDouble){
+<span class="fc bfc" id="L167" title="All 2 branches covered.">        if (status == EfeitoStatus.PARALISADO){</span>
+<span class="pc bpc" id="L168" title="1 of 2 branches missed.">            return (geradorDouble.gerarDouble() &gt;= CHANCE_PARALISIA);</span>
+        }
+<span class="fc" id="L170">        return true;</span>
+    }
+
+    public void restaurar(){
+<span class="fc" id="L174">        this.hpAtual = this.hpMax;</span>
+<span class="fc" id="L175">        this.status = EfeitoStatus.NENHUM;</span>
+<span class="fc" id="L176">        this.estagioAtk = 0;</span>
+<span class="fc" id="L177">        this.estagioDef = 0;</span>
+<span class="fc" id="L178">        this.estagioSpd = 0;</span>
+<span class="fc" id="L179">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
