@@ -8,17 +8,17 @@ public class CuraStatus extends Item {
     private EfeitoStatus statusCura;
 
     public CuraStatus(String nome, EfeitoStatus statusCura) {
-<span class="nc" id="L11">        super(nome);</span>
-<span class="nc" id="L12">        this.statusCura = statusCura;</span>
-<span class="nc" id="L13">    }</span>
+<span class="fc" id="L11">        super(nome);</span>
+<span class="fc" id="L12">        this.statusCura = statusCura;</span>
+<span class="fc" id="L13">    }</span>
 
     @Override
     public void usar(Pokemon pokemon) {
-<span class="nc bnc" id="L17" title="All 2 branches missed.">        if (pokemon.getStatus() == statusCura) {</span>
-<span class="nc" id="L18">            pokemon.curarStatus();</span>
+<span class="fc bfc" id="L17" title="All 2 branches covered.">        if (pokemon.getStatus() == statusCura) {</span>
+<span class="fc" id="L18">            pokemon.curarStatus();</span>
         } else{
-<span class="nc" id="L20">            System.out.println(&quot;Não haverá efeito.&quot;);</span>
+<span class="fc" id="L20">            System.out.println(&quot;Não haverá efeito.&quot;);</span>
         }
-<span class="nc" id="L22">    }</span>
+<span class="fc" id="L22">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

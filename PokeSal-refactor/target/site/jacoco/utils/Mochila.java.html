@@ -26,7 +26,7 @@ public class Mochila {
      * @param item
      */
     public void adicionarItem(Item item){
-<span class="pc bpc" id="L29" title="1 of 2 branches missed.">        if (item != null){</span>
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (item != null){</span>
 <span class="fc" id="L30">            this.itens.add(item);</span>
         }
 <span class="fc" id="L32">    }</span>
@@ -41,15 +41,15 @@ public class Mochila {
 <span class="fc" id="L41">            throw new IllegalStateException(&quot;Você só pode usar 2 itens por batalha!&quot;);</span>
         }
 
-<span class="pc bpc" id="L44" title="1 of 2 branches missed.">        if (this.itens.contains(item)){</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (this.itens.contains(item)){</span>
 <span class="fc" id="L45">            item.usar(pokemon);</span>
 <span class="fc" id="L46">            this.usados++;</span>
         }
 <span class="fc" id="L48">    }</span>
 
     public void removerItem(Item item) {
-<span class="nc" id="L51">        this.itens.remove(item);</span>
-<span class="nc" id="L52">    }</span>
+<span class="fc" id="L51">        this.itens.remove(item);</span>
+<span class="fc" id="L52">    }</span>
 
     public void resetarUso(){
 <span class="fc" id="L55">        this.usados = 0;</span>

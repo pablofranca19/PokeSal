@@ -15,62 +15,62 @@ public class RegistroBatalhaMemoria implements RegistroBatalha{
     private Terreno efeitoDeTerreno;
     private List&lt;Item&gt; itensUsados;
 
-<span class="nc" id="L18">    public RegistroBatalhaMemoria() {</span>
-<span class="nc" id="L19">        itensUsados = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L20">    }</span>
+<span class="fc" id="L18">    public RegistroBatalhaMemoria() {</span>
+<span class="fc" id="L19">        itensUsados = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L20">    }</span>
 
     @Override
     public void registrarAtaque(Ataque ataqueRealizado) {
-<span class="nc" id="L24">        this.ataqueRealizado = ataqueRealizado;</span>
-<span class="nc" id="L25">        dano = 0;</span>
-<span class="nc" id="L26">        efeitoStatus = NENHUM;</span>
-<span class="nc" id="L27">        efeitoDeTerreno = null;</span>
-<span class="nc" id="L28">        itensUsados.clear();</span>
-<span class="nc" id="L29">    }</span>
+<span class="fc" id="L24">        this.ataqueRealizado = ataqueRealizado;</span>
+<span class="fc" id="L25">        dano = 0;</span>
+<span class="fc" id="L26">        efeitoStatus = NENHUM;</span>
+<span class="fc" id="L27">        efeitoDeTerreno = null;</span>
+<span class="fc" id="L28">        itensUsados.clear();</span>
+<span class="fc" id="L29">    }</span>
 
     @Override
     public void registrarDano(int danoCausado) {
-<span class="nc" id="L33">        this.dano = danoCausado;</span>
-<span class="nc" id="L34">    }</span>
+<span class="fc" id="L33">        this.dano = danoCausado;</span>
+<span class="fc" id="L34">    }</span>
 
     @Override
     public void registrarEfeitoStatus(EfeitoStatus efeitoStatus) {
-<span class="nc" id="L38">        this.efeitoStatus = efeitoStatus;</span>
-<span class="nc" id="L39">    }</span>
+<span class="fc" id="L38">        this.efeitoStatus = efeitoStatus;</span>
+<span class="fc" id="L39">    }</span>
 
     @Override
     public void registrarEfeitoTerreno(Terreno efeitoTerreno) {
-<span class="nc" id="L43">        this.efeitoDeTerreno = efeitoTerreno;</span>
-<span class="nc" id="L44">    }</span>
+<span class="fc" id="L43">        this.efeitoDeTerreno = efeitoTerreno;</span>
+<span class="fc" id="L44">    }</span>
 
     @Override
     public void registrarItem(Item item) {
-<span class="nc" id="L48">        itensUsados.add(item);</span>
-<span class="nc" id="L49">    }</span>
+<span class="fc" id="L48">        itensUsados.add(item);</span>
+<span class="fc" id="L49">    }</span>
 
     @Override
     public Ataque getAtaqueRealizado() {
-<span class="nc" id="L53">        return ataqueRealizado;</span>
+<span class="fc" id="L53">        return ataqueRealizado;</span>
     }
 
     @Override
     public int getDano() {
-<span class="nc" id="L58">        return dano;</span>
+<span class="fc" id="L58">        return dano;</span>
     }
 
     @Override
     public EfeitoStatus getEfeitoStatus() {
-<span class="nc" id="L63">        return efeitoStatus;</span>
+<span class="fc" id="L63">        return efeitoStatus;</span>
     }
 
     @Override
     public Terreno getEfeitoDeTerreno() {
-<span class="nc" id="L68">        return efeitoDeTerreno;</span>
+<span class="fc" id="L68">        return efeitoDeTerreno;</span>
     }
 
     @Override
     public List&lt;Item&gt; getItensUsados() {
-<span class="nc" id="L73">        return List.copyOf(itensUsados);</span>
+<span class="fc" id="L73">        return List.copyOf(itensUsados);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

@@ -7,30 +7,30 @@ import java.util.List;
 public class RepositorioResultadosMemoria implements RepositorioResultados{
     private final List&lt;ResultadoBatalha&gt; resultados;
 
-<span class="nc" id="L10">    public RepositorioResultadosMemoria() {</span>
-<span class="nc" id="L11">        this.resultados = new ArrayList&lt;&gt;();</span>
-<span class="nc" id="L12">    }</span>
+<span class="fc" id="L10">    public RepositorioResultadosMemoria() {</span>
+<span class="fc" id="L11">        this.resultados = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L12">    }</span>
 
     @Override
     public void salvarResultados(ResultadoBatalha resultado) {
-<span class="nc bnc" id="L16" title="All 4 branches missed.">        if (resultado != null &amp;&amp; !resultados.contains(resultado)) {</span>
-<span class="nc" id="L17">            resultados.add(resultado);</span>
+<span class="fc bfc" id="L16" title="All 4 branches covered.">        if (resultado != null &amp;&amp; !resultados.contains(resultado)) {</span>
+<span class="fc" id="L17">            resultados.add(resultado);</span>
         }
-<span class="nc" id="L19">    }</span>
+<span class="fc" id="L19">    }</span>
 
     @Override
     public List&lt;ResultadoBatalha&gt; getResultados() {
-<span class="nc" id="L23">        return Collections.unmodifiableList(resultados);</span>
+<span class="fc" id="L23">        return Collections.unmodifiableList(resultados);</span>
     }
 
     @Override
     public void exibirResultados() {
-<span class="nc bnc" id="L28" title="All 2 branches missed.">        for (ResultadoBatalha r : resultados){</span>
-<span class="nc" id="L29">            System.out.println(&quot;Vencedor: &quot; + r.vencedor().nome() +</span>
-<span class="nc" id="L30">                    &quot;\n Perdedor: &quot; + r.perdedor().nome() +</span>
-<span class="nc" id="L31">                    &quot;\n Turnos : &quot; + r.turnos());</span>
-<span class="nc" id="L32">        }</span>
-<span class="nc" id="L33">    }</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">        for (ResultadoBatalha r : resultados){</span>
+<span class="fc" id="L29">            System.out.println(&quot;Vencedor: &quot; + r.vencedor().nome() +</span>
+<span class="fc" id="L30">                    &quot;\n Perdedor: &quot; + r.perdedor().nome() +</span>
+<span class="fc" id="L31">                    &quot;\n Turnos : &quot; + r.turnos());</span>
+<span class="fc" id="L32">        }</span>
+<span class="fc" id="L33">    }</span>
 
 
 }

@@ -134,9 +134,6 @@ public class BatalhaMockitoTest {
         assertEquals(2, resultado.turnos());
     }
 
-    // ------------------------------------------------------------------------------------------
-    // testResultadoSalvoAoFimDaBatalha -> ArgumentCaptor
-    // ------------------------------------------------------------------------------------------
     @Test
     @DisplayName("Ao fim da batalha o resultado (vencedor, perdedor, turnos) é salvo no repositório")
     void testResultadoSalvoAoFimDaBatalha() {
@@ -154,9 +151,6 @@ public class BatalhaMockitoTest {
         assertEquals(List.of(pokemonJogador, pokemonOponente), salvo.pokesalUtilizados());
     }
 
-    // ------------------------------------------------------------------------------------------
-    // testFalhaNoRepositorioNaoInvalidaBatalha -> doThrow
-    // ------------------------------------------------------------------------------------------
     @Test
     @DisplayName("Se o repositório lançar exceção, o vencedor continua definido")
     void testFalhaNoRepositorioNaoInvalidaBatalha() {
@@ -173,9 +167,6 @@ public class BatalhaMockitoTest {
         verify(repositorio, times(1)).salvarResultados(any(ResultadoBatalha.class));
     }
 
-    // ------------------------------------------------------------------------------------------
-    // testRepositorioNaoChamadoSeBatalhaNaoTerminou -> never()
-    // ------------------------------------------------------------------------------------------
     @Test
     @DisplayName("Repositório não é chamado se a batalha não terminou (jogador fugiu)")
     void testRepositorioNaoChamadoSeBatalhaNaoTerminou() {
@@ -189,14 +180,11 @@ public class BatalhaMockitoTest {
         verify(registro, never()).registrarAtaque(any(Ataque.class));
     }
 
-    // ------------------------------------------------------------------------------------------
-    // times() + atLeastOnce() com batalha de vários turnos
-    // ------------------------------------------------------------------------------------------
     @Test
     @DisplayName("Batalha de vários turnos: conta turnos e registra cada golpe")
     void testBatalhaComVariosTurnosRegistraTodosOsGolpes() {
         danoSempre(10);
-        // oponente com 25 de HP: cai no 3º golpe do jogador (10 de dano por golpe)
+
         pokemonOponente.setHpAtual(25);
 
         ResultadoBatalha resultado = criarBatalha(jogador, oponente, "", false).iniciarBatalha();
@@ -211,13 +199,9 @@ public class BatalhaMockitoTest {
                 .calcularDano(any(Ataque.class), any(Pokemon.class), any(Pokemon.class), any(Terreno.class));
     }
 
-    // ------------------------------------------------------------------------------------------
-    // golpe que erra na batalha (cálculo mockado devolve 0)
-    // ------------------------------------------------------------------------------------------
     @Test
     @DisplayName("Golpe que erra (dano 0) não altera o HP do alvo e é registrado com dano 0")
     void testGolpeErradoNaBatalhaNaoAlteraHpDoAlvo() {
-        // retornos em sequência: o 1º golpe (jogador) erra; o 2º (oponente) acerta em cheio
         when(calcDano.calcularDano(any(Ataque.class), any(Pokemon.class), any(Pokemon.class), any(Terreno.class)))
                 .thenReturn(0, 100);
 

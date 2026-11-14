@@ -156,8 +156,8 @@ public class Pokemon {
 <span class="fc bfc" id="L156" title="All 2 branches covered.">        if (status == EfeitoStatus.QUEIMADO){</span>
 <span class="fc" id="L157">            this.hpAtual = Math.max(hpAtual - hpMax/DIVISOR_DANO_QUEIMADURA, 0);</span>
         }
-<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        if (status == EfeitoStatus.ENVENENADO){</span>
-<span class="nc" id="L160">            this.hpAtual = Math.max(hpAtual - hpMax/DIVISOR_DANO_VENENO, 0);</span>
+<span class="fc bfc" id="L159" title="All 2 branches covered.">        if (status == EfeitoStatus.ENVENENADO){</span>
+<span class="fc" id="L160">            this.hpAtual = Math.max(hpAtual - hpMax/DIVISOR_DANO_VENENO, 0);</span>
         }
 <span class="fc" id="L162">    }</span>
 
@@ -165,7 +165,7 @@ public class Pokemon {
 
     public boolean podeAgir(GeradorDoubleAleatorio geradorDouble){
 <span class="fc bfc" id="L167" title="All 2 branches covered.">        if (status == EfeitoStatus.PARALISADO){</span>
-<span class="pc bpc" id="L168" title="1 of 2 branches missed.">            return (geradorDouble.gerarDouble() &gt;= CHANCE_PARALISIA);</span>
+<span class="fc bfc" id="L168" title="All 2 branches covered.">            return (geradorDouble.gerarDouble() &gt;= CHANCE_PARALISIA);</span>
         }
 <span class="fc" id="L170">        return true;</span>
     }
